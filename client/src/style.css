@@ -1,0 +1,334 @@
+:root {
+  font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+  color: #403252;
+  background: #fff4dc;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 10% 20%, #ffe0b3 0, transparent 40%),
+    radial-gradient(ellipse at 95% 80%, #dfedd8 0, transparent 45%), #fff4dc;
+  min-height: 100dvh;
+}
+#app {
+  max-width: 560px;
+  margin: auto;
+  padding: max(24px, env(safe-area-inset-top)) 22px
+    max(20px, env(safe-area-inset-bottom));
+}
+#welcome {
+  text-align: center;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: #9c6b54;
+  margin-top: 14px;
+}
+.mascot {
+  font-size: 76px;
+  margin: 20px 0 0;
+  filter: drop-shadow(0 8px 0 #dfc9b6);
+}
+h1 {
+  font-size: clamp(40px, 10vw, 58px);
+  line-height: 1.02;
+  letter-spacing: -2px;
+  margin: 8px 0 18px;
+  color: #7a51ae;
+}
+h1 span {
+  color: #ed8366;
+}
+.intro {
+  font-size: 16px;
+  color: #7a6c7e;
+  margin-bottom: 24px;
+}
+form {
+  padding: 20px;
+  background: #fffaf0;
+  border: 2px solid #eee0ca;
+  border-radius: 28px;
+  box-shadow: 0 8px 0 #ebdcc5;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+  margin: 0 0 20px;
+  flex-wrap: wrap;
+}
+legend {
+  text-align: left;
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex: 1;
+  background: #f0e9f6;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  min-height: 58px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+label:has(input:checked) {
+  border-color: #956bc1;
+  background: #e8dcf5;
+}
+input[type="radio"] {
+  accent-color: #8156af;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  border: 0;
+  border-radius: 16px;
+  background: #e9ddf4;
+  color: #5e4080;
+  min-height: 50px;
+  padding: 12px 16px;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:hover {
+  filter: brightness(1.04);
+}
+button:active {
+  transform: translateY(3px);
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.primary {
+  width: 100%;
+  background: #8558b3;
+  color: white;
+  box-shadow: 0 5px 0 #63408a;
+  font-size: 18px;
+  min-height: 62px;
+}
+.join-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+#room-code {
+  min-width: 0;
+  width: 65%;
+  border: 2px solid #eadfcf;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: white;
+  color: #5e4080;
+}
+.footnote {
+  font-size: 12px;
+  color: #99877b;
+  margin: 24px 0 8px;
+}
+#message {
+  text-align: center;
+  font-weight: 700;
+  color: #8c4264;
+  min-height: 24px;
+}
+header,
+.room-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.brand {
+  text-decoration: none;
+  color: #7850a5;
+  font-weight: 900;
+}
+header button,
+.room-info button {
+  min-height: 44px;
+  font-size: 12px;
+}
+.room-info {
+  font-size: 14px;
+}
+#code {
+  letter-spacing: 3px;
+}
+#players {
+  display: flex;
+  gap: 8px;
+}
+.player {
+  flex: 1;
+  border: 2px solid #e2d4e9;
+  border-radius: 16px;
+  background: #fffaf0;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.player strong {
+  display: block;
+  font-size: 16px;
+}
+.online {
+  color: #41886a;
+}
+.offline {
+  color: #a77c58;
+}
+#connection {
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+  color: #78667c;
+}
+#game {
+  width: 100%;
+  aspect-ratio: 540/800;
+  margin-bottom: 16px;
+}
+#game canvas {
+  touch-action: none;
+  border-radius: 26px;
+}
+:focus-visible {
+  outline: 3px solid #e9933c;
+  outline-offset: 4px;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* Leave room for large game taps while keeping the parent controls compact. */
+body:has(#play:not([hidden])) #app {
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+#play header,
+#play .room-info {
+  margin-bottom: 8px;
+}
+#play .player {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+#play .player strong {
+  font-size: 14px;
+}
+#play #connection {
+  font-size: 12px;
+  margin: 8px 0;
+}
+#play .footnote {
+  display: none;
+}
+#play #game {
+  max-height: calc(100dvh - 245px);
+  margin-bottom: 0;
+}
+#play.in-game .room-info {
+  display: none;
+}
+#play.in-game #game {
+  max-height: calc(100dvh - 180px);
+}
+#connection:empty,
+#message:empty {
+  display: none;
+}
+.mascot img {
+  width: 118px;
+  height: 112px;
+  object-fit: contain;
+}
+.parent-actions {
+  display: flex;
+  gap: 6px;
+}
+#play .brand {
+  font-size: 14px;
+}
+#play header button {
+  padding: 10px;
+}
+.settings-link {
+  background: transparent;
+  min-height: 44px;
+  font-size: 13px;
+  margin-top: 14px;
+}
+dialog {
+  width: min(92vw, 460px);
+  max-height: 90dvh;
+  overflow: auto;
+  border: 2px solid #dbc9e6;
+  border-radius: 26px;
+  padding: 0;
+  color: #403252;
+  background: #fffaf0;
+}
+dialog::backdrop {
+  background: #40325280;
+}
+.audio-options {
+  border: 0;
+  box-shadow: none;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+  text-align: left;
+}
+.audio-options h2 {
+  margin: 0;
+  font-size: 24px;
+}
+.audio-options p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #7a6c7e;
+}
+.audio-options label {
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+.audio-options input {
+  accent-color: #8558b3;
+}
+.audio-options input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+}
+.audio-options input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+}
+.audio-options .volume-label {
+  min-height: auto;
+  background: none;
+  padding: 0;
+}

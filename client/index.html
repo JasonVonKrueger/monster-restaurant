@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#fff4dc" />
+    <title>Monster Restaurant</title>
+  </head>
+  <body>
+    <main id="app">
+      <section id="welcome">
+        <div class="eyebrow">A LITTLE PLACE FOR BIG APPETITES</div>
+        <div class="mascot" aria-hidden="true">
+          <img
+            src="/assets/monsters/bubbles/idle.png"
+            alt=""
+            width="118"
+            height="112"
+          />
+        </div>
+        <h1>Monster<br /><span>Restaurant</span></h1>
+        <p class="intro">Two friends. One delicious adventure.</p>
+        <form id="room-form">
+          <fieldset>
+            <legend>Who’s playing?</legend>
+            <label
+              ><input type="radio" name="name" value="Raelyn" checked /> 🌷
+              Raelyn</label
+            ><label
+              ><input type="radio" name="name" value="Cooper" /> 🦕
+              Cooper</label
+            >
+          </fieldset>
+          <fieldset>
+            <legend>Pick your place</legend>
+            <label
+              ><input type="radio" name="role" value="dining" checked /> 🛎️
+              Dining room</label
+            ><label
+              ><input type="radio" name="role" value="kitchen" /> 👨‍🍳
+              Kitchen</label
+            >
+          </fieldset>
+          <button class="primary" type="submit">✨ Create Restaurant</button>
+          <div class="join-row">
+            <input
+              id="room-code"
+              aria-label="Restaurant code"
+              placeholder="ROOM CODE"
+              maxlength="5"
+              autocomplete="off"
+            /><button id="join" type="button">Join →</button>
+          </div>
+        </form>
+        <button class="settings-link" type="button" data-audio-settings>
+          ⚙ Parent settings
+        </button>
+        <p class="footnote">Made for little hands & big imaginations</p>
+      </section>
+      <section id="play" hidden>
+        <header>
+          <a class="brand" href="/">👾 Monster Restaurant</a>
+          <div class="parent-actions">
+            <button type="button" data-audio-settings>⚙ Parent</button
+            ><button id="leave" type="button">Leave</button>
+          </div>
+        </header>
+        <div class="room-info">
+          <span>Restaurant <strong id="code"></strong></span
+          ><button id="share">Copy invite ↗</button>
+        </div>
+        <div id="players"></div>
+        <p id="connection" role="status"></p>
+        <div
+          id="game"
+          aria-label="Your restaurant. Tap the large pictures to welcome, cook, and serve."
+        ></div>
+        <p class="footnote">Made together. Served with a smile.</p>
+      </section>
+      <dialog id="audio-settings" aria-labelledby="audio-title">
+        <form method="dialog" class="audio-options">
+          <h2 id="audio-title">Sound & little voices</h2>
+          <p>Tap a game picture to wake up the sounds.</p>
+          <label>Quiet mode <input id="mute-audio" type="checkbox" /></label>
+          <label
+            >Spoken guidance <input id="narration" type="checkbox"
+          /></label>
+          <label class="volume-label" for="volume"
+            >Volume <output id="volume-value" for="volume"></output
+          ></label>
+          <input
+            id="volume"
+            type="range"
+            min="0"
+            max="100"
+            step="5"
+            aria-label="Sound and narration volume"
+          />
+          <p id="voice-note">
+            Voices depend on your browser. Glowing pictures work with sound off,
+            too. Tap 🔊 to hear the current step again.
+          </p>
+          <button class="primary" type="submit">Done</button>
+        </form>
+      </dialog>
+      <p id="message" role="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
