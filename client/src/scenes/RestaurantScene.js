@@ -3,8 +3,31 @@ import { monster, pizza } from "../entities/art.js";
 import { preloadAssets } from "../data/assets.js";
 import { guidanceFor } from "../data/guidance.js";
 import { backdrop } from "../entities/backdrop.js";
-import { pulse, wiggle, burst, reaction, fly } from "../animations/effects.js";
-import { INGREDIENTS } from "../../../shared/recipes.js";
+import { pulse, wiggle, burst, reaction } from "../animations/effects.js";
+export const INK = 0x2b1d3a;
+// Pip's reaction to each effect, when the scene has a chef.
+const CHEF_POSES = {
+  BOUNCE: "happy",
+  HUG: "wave",
+  ADD_INGREDIENT: "happy",
+  COOK: "happy",
+  DELIVER: "wave",
+  SERVE: "happy",
+  SEND_ORDER: "wave",
+  START: "wave",
+  NEXT_CUSTOMER: "wave",
+};
+// The visiting monster's reaction to each effect.
+const GUEST_POSES = {
+  BOUNCE: "happy",
+  HUG: "wave",
+  WELCOME: "wave",
+  SEND_ORDER: "happy",
+  DELIVER: "happy",
+  SERVE: "eat",
+  START: "wave",
+  NEXT_CUSTOMER: "wave",
+};
 const font = {
   fontFamily: "Trebuchet MS",
   color: "#5b416e",
@@ -64,13 +87,59 @@ export class RestaurantScene extends Phaser.Scene {
       .text(x, y, text, { ...font, fontSize: `${size}px` })
       .setOrigin(0.5);
   }
+  // A label on a cream sign, readable over busy artwork. Returns the container.
+  plaque(x, y, text, size = 24) {
+    const t = this.label(0, 0, text, size);
+    const w = t.width + 34,
+      h = t.height + 14;
+    const g = this.add.graphics();
+    g.fillStyle(0xfff7dc, 0.96);
+    g.fillRoundedRect(-w / 2, -h / 2, w, h, h / 2);
+    g.lineStyle(3, INK);
+    g.strokeRoundedRect(-w / 2, -h / 2, w, h, h / 2);
+    return this.add.container(x, y, [g, t]);
+  }
+  drawBackdrop() {
+    backdrop(this, this.role);
+  }
+  // The cream panel behind the title, rewards, hug and sound buttons, over room art.
+  headerPanel() {
+    const header = this.add.graphics();
+    header.fillStyle(0xfffbef);
+    header.fillRoundedRect(28, 24, 484, 96, 28);
+    header.lineStyle(3, INK);
+    header.strokeRoundedRect(28, 24, 484, 96, 28);
+  }
+  lobby(snapshot, online) {
+    this.guest = monster(this, 270, 345);
+    this.label(270, 535, "Let’s open our restaurant!", 29);
+    if (this.role === "dining")
+      this.button(
+        270,
+        640,
+        430,
+        "🚪 Open restaurant",
+        () => this.act("START"),
+        {
+          active:
+            online &&
+            snapshot.players.length === 2 &&
+            snapshot.players.every((p) => p.connected),
+          highlight: true,
+        },
+      );
+    else this.label(270, 625, "🛎️ Your friend opens the doors", 24);
+    this.button(270, 735, 370, "✨ Bounce together", () => this.act("BOUNCE"), {
+      active: online,
+    });
+  }
   button(
     x,
     y,
     w,
     text,
     callback,
-    { active = true, highlight = false, fontSize = 23, draggable = false } = {},
+    { active = true, highlight = false, fontSize = 23 } = {},
   ) {
     const c = this.add.container(x, y),
       g = this.add.graphics();
@@ -90,18 +159,17 @@ export class RestaurantScene extends Phaser.Scene {
     );
     if (active) {
       c.setSize(w, 72).setInteractive({ useHandCursor: true });
-      if (!draggable)
-        c.on("pointerdown", () => {
-          this.audio.unlock();
-          this.audio.play("tap");
-          this.tweens.add({
-            targets: c,
-            scale: 0.95,
-            duration: 80,
-            yoyo: true,
-          });
-          callback();
+      c.on("pointerdown", () => {
+        this.audio.unlock();
+        this.audio.play("tap");
+        this.tweens.add({
+          targets: c,
+          scale: 0.95,
+          duration: 80,
+          yoyo: true,
         });
+        callback();
+      });
     }
     if (highlight && active) {
       pulse(this, g);
@@ -109,8 +177,9 @@ export class RestaurantScene extends Phaser.Scene {
     }
     return c;
   }
+  // Returns a promise of whether the server accepted the action.
   act(type, payload = {}) {
-    this.game.registry.get("sendAction")(type, {
+    return this.game.registry.get("sendAction")(type, {
       orderId: this.game.registry.get("snapshot").game?.order.id,
       ...payload,
     });
@@ -118,14 +187,16 @@ export class RestaurantScene extends Phaser.Scene {
   paint() {
     this.tweens.killAll();
     this.time.removeAllEvents();
-    this.children.removeAll(true);
-    this.bubbles = null;
+    // Destroy, not just remove: removed objects stay interactive and keep their listeners.
+    for (const child of [...this.children.list]) child.destroy();
+    this.guest = null;
+    this.chef = null;
     this.dish = null;
     this.prepDish = null;
     this.guideTarget = null;
     const snapshot = this.game.registry.get("snapshot");
     if (!snapshot) return;
-    backdrop(this, this.role);
+    this.drawBackdrop(snapshot);
     this.label(
       270,
       52,
@@ -163,35 +234,7 @@ export class RestaurantScene extends Phaser.Scene {
       },
       { fontSize: 28 },
     );
-    if (!snapshot.game) {
-      this.bubbles = monster(this, 270, 345);
-      this.label(270, 535, "Let’s open our restaurant!", 29);
-      if (this.role === "dining")
-        this.button(
-          270,
-          640,
-          430,
-          "🚪 Open restaurant",
-          () => this.act("START"),
-          {
-            active:
-              online &&
-              snapshot.players.length === 2 &&
-              snapshot.players.every((p) => p.connected),
-            highlight: true,
-          },
-        );
-      else this.label(270, 625, "🛎️ Your friend opens the doors", 24);
-      this.button(
-        270,
-        735,
-        370,
-        "✨ Bounce together",
-        () => this.act("BOUNCE"),
-        { active: online },
-      );
-      return;
-    }
+    if (!snapshot.game) return this.lobby(snapshot, online);
     const order = snapshot.game.order;
     if (this.role === "dining") this.dining(order, online);
     else this.kitchen(order, online);
@@ -220,7 +263,7 @@ export class RestaurantScene extends Phaser.Scene {
       onComplete: () => toast.destroy(),
     });
   }
-  effect({ type, ingredientId }) {
+  effect({ type }) {
     const sounds = {
       BOUNCE: "pop",
       HUG: "hug",
@@ -229,14 +272,17 @@ export class RestaurantScene extends Phaser.Scene {
       DELIVER: "bell",
       SERVE: "celebration",
       WELCOME: "pop",
+      GIVE_MENU: "pop",
       SEND_ORDER: "bell",
       START: "reward",
       NEXT_CUSTOMER: "pop",
     };
     this.audio.play(sounds[type] || "tap");
+    this.chef?.pose(CHEF_POSES[type]);
+    this.guest?.pose(GUEST_POSES[type]);
     if (type === "HUG") {
       burst(this, { kind: "hearts", y: 580, count: 10 });
-      wiggle(this, this.bubbles || this.prepDish);
+      wiggle(this, this.guest || this.chef || this.prepDish);
       return;
     }
     if (type === "DELIVER" && this.role === "dining" && this.dish) {
@@ -252,31 +298,23 @@ export class RestaurantScene extends Phaser.Scene {
     if (type === "DELIVER" && this.role === "kitchen") {
       const dish = pizza(
         this,
-        270,
-        305,
+        this.prepAt.x,
+        this.prepAt.y,
         this.game.registry.get("snapshot").game.order.addedIngredients,
-        0.9,
+        this.prepAt.scale,
       );
       this.tweens.add({
         targets: dish,
         x: 620,
-        y: 180,
+        y: this.prepAt.y - 120,
         alpha: 0,
         duration: 650,
         onComplete: () => dish.destroy(),
       });
     }
     if (type === "ADD_INGREDIENT" && this.role === "kitchen") {
-      const i = Object.keys(INGREDIENTS).indexOf(ingredientId);
-      if (i >= 0) {
-        const item = this.label(
-          105 + (i % 3) * 165,
-          465 + Math.floor(i / 3) * 90,
-          INGREDIENTS[ingredientId].icon,
-          40,
-        );
-        fly(this, item, 270, 305);
-      }
+      // The chef dragged it onto the pizza; celebrate where it landed.
+      burst(this, { x: this.prepAt.x, y: this.prepAt.y, count: 10 });
       return;
     }
     if (type === "SERVE" && this.role === "dining") {
@@ -300,11 +338,12 @@ export class RestaurantScene extends Phaser.Scene {
       this.time.delayedCall(1450, () => this.audio.play("reward"));
       reaction(
         this,
-        this.bubbles,
+        this.guest,
         this.game.registry.get("snapshot").game.completedOrders % 3,
       );
     }
-    if (type === "BOUNCE") wiggle(this, this.bubbles || this.prepDish);
+    if (type === "BOUNCE")
+      wiggle(this, this.guest || this.chef || this.prepDish);
     if (type === "SERVE" && this.role === "kitchen")
       burst(this, { kind: "confetti", count: 24 });
     if (type !== "SERVE")

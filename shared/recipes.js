@@ -3,11 +3,13 @@ export const INGREDIENTS = Object.freeze({
   sauce: { icon: "🍅", label: "Sauce", color: 0xe87564 },
   cheese: { icon: "🧀", label: "Cheese", color: 0xffd666 },
   strawberry: { icon: "🍓", label: "Strawberry", color: 0xf58b9f },
-  pickle: { icon: "🥒", label: "Pickle", color: 0x9ecf89 },
-  marshmallow: { icon: "☁️", label: "Marshmallow", color: 0xffffff },
+  lemon: { icon: "🍋", label: "Lemon", color: 0xfff176 },
+  cookie: { icon: "🍪", label: "Cookie", color: 0xc68a4e },
 });
 export const PIZZA = Object.freeze({
   id: "strawberry-pizza",
   requiredIngredients: ["dough", "sauce", "cheese", "strawberry"],
 });
 export const COOK_MS = 2200;
+// How long a monster reads the menu before it is ready to order.
+export const MENU_READ_MS = 3000;

@@ -45,11 +45,6 @@ h1 {
 h1 span {
   color: #ed8366;
 }
-.intro {
-  font-size: 16px;
-  color: #7a6c7e;
-  margin-bottom: 24px;
-}
 form {
   padding: 20px;
   background: #fffaf0;
@@ -166,8 +161,7 @@ header,
   color: #7850a5;
   font-weight: 900;
 }
-header button,
-.room-info button {
+header button {
   min-height: 44px;
   font-size: 12px;
 }
@@ -261,9 +255,11 @@ body:has(#play:not([hidden])) #app {
   display: none;
 }
 .mascot img {
+  /* Frame 0 of Bubbles' five-frame sprite sheet. */
   width: 118px;
-  height: 112px;
-  object-fit: contain;
+  height: 118px;
+  object-fit: cover;
+  object-position: 0 0;
 }
 .parent-actions {
   display: flex;

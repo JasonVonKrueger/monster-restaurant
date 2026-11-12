@@ -1,6 +1,8 @@
 import { INGREDIENTS } from "../../../shared/recipes.js";
+import { monsterName } from "../../../shared/monsters.js";
 export function guidanceFor(snapshot, role) {
   const order = snapshot?.game?.order;
+  const name = monsterName(order?.monsterId);
   if (!order)
     return role === "dining"
       ? "Invite your friend, then open the restaurant!"
@@ -13,23 +15,26 @@ export function guidanceFor(snapshot, role) {
         : "Tap the oven. Let’s bake your pizza!";
     }
     return {
-      CUSTOMER_ARRIVED:
-        "Your friend is welcoming Bubbles. Try stirring the silly soup!",
-      CUSTOMER_SEATED: "Bubbles wants a pizza! Here comes your order.",
+      CUSTOMER_ARRIVED: `Your friend is welcoming ${name}. Tap Pip the chef for a giggle!`,
+      CUSTOMER_SEATED: `Your friend is giving ${name} the menu.`,
+      READING_MENU: `${name} is reading the menu. What will it be?`,
+      READY_TO_ORDER: `${name} wants a pizza! Here comes your order.`,
       COOKING: "Your pizza is cooking. A little oven magic!",
       READY_TO_DELIVER: "Your pizza is ready! Send it to your friend!",
       DELIVERED: "Your friend is serving the pizza. Great helping!",
-      COMPLETE: "Great teamwork! Bubbles loved your pizza!",
+      COMPLETE: `Great teamwork! ${name} loved your pizza!`,
     }[order.status];
   }
   return {
-    CUSTOMER_ARRIVED: "Look! Bubbles is here! Tap to say hello!",
-    CUSTOMER_SEATED: "Let’s make a pizza! Tap the bell to send the order.",
+    CUSTOMER_ARRIVED: `Look! ${name} is here! Tap to say hello!`,
+    CUSTOMER_SEATED: `Drag the menu to ${name}!`,
+    READING_MENU: `${name} is reading the menu. Hmm, what looks yummy?`,
+    READY_TO_ORDER: "Let’s make a pizza! Tap the bell to send the order.",
     ORDER_SENT: "Your chef has the order. Pop some bubbles while you wait!",
     PREPARING: "Your chef is making a silly pizza!",
     COOKING: "Your pizza is cooking. Send your chef a hug!",
     READY_TO_DELIVER: "Your chef made a pizza! It will be here soon.",
-    DELIVERED: "Ding ding! Tap the pizza to serve Bubbles!",
+    DELIVERED: `Ding ding! Tap the pizza to serve ${name}!`,
     COMPLETE: "Great teamwork! Tap the door for another hungry visit!",
   }[order.status];
 }

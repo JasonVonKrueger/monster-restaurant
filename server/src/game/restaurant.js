@@ -1,8 +1,15 @@
-import { randomUUID } from "node:crypto";
-import { PIZZA, INGREDIENTS, COOK_MS } from "../../../shared/recipes.js";
+import { randomInt, randomUUID } from "node:crypto";
+import {
+  PIZZA,
+  INGREDIENTS,
+  COOK_MS,
+  MENU_READ_MS,
+} from "../../../shared/recipes.js";
+import { MONSTERS } from "../../../shared/monsters.js";
 export const GAME_ACTIONS = new Set([
   "START",
   "WELCOME",
+  "GIVE_MENU",
   "SEND_ORDER",
   "ADD_INGREDIENT",
   "COOK",
@@ -13,15 +20,21 @@ export const GAME_ACTIONS = new Set([
 const requireThat = (condition, message) => {
   if (!condition) throw new Error(message);
 };
-export function newOrder(now) {
+// A random monster, never the same one twice in a row.
+export function nextMonster(previousId) {
+  const choices = MONSTERS.filter((m) => m.id !== previousId);
+  return choices[randomInt(choices.length)].id;
+}
+export function newOrder(now, previousMonsterId) {
   return {
     id: randomUUID(),
-    monsterId: "bubbles",
+    monsterId: nextMonster(previousMonsterId),
     recipeId: PIZZA.id,
     requiredIngredients: [...PIZZA.requiredIngredients],
     addedIngredients: [],
     status: "CUSTOMER_ARRIVED",
     createdAt: now,
+    readEndsAt: null,
     cookEndsAt: null,
   };
 }
@@ -64,8 +77,13 @@ export function applyGameAction(room, player, { type, payload = {} }, now) {
       status(["CUSTOMER_ARRIVED"]);
       order.status = "CUSTOMER_SEATED";
       break;
-    case "SEND_ORDER":
+    case "GIVE_MENU":
       status(["CUSTOMER_SEATED"]);
+      order.status = "READING_MENU";
+      order.readEndsAt = now + MENU_READ_MS;
+      break;
+    case "SEND_ORDER":
+      status(["READY_TO_ORDER"]);
       order.status = "ORDER_SENT";
       break;
     case "ADD_INGREDIENT": {
@@ -106,15 +124,23 @@ export function applyGameAction(room, player, { type, payload = {} }, now) {
       break;
     case "NEXT_CUSTOMER":
       status(["COMPLETE"]);
-      room.game.order = newOrder(now);
+      room.game.order = newOrder(now, order.monsterId);
       break;
     default:
       throw new Error("Choose an action in your restaurant.");
   }
 }
-export function advanceCooking(room, now) {
+// Steps that finish on the server clock: reading the menu and cooking.
+// Returns true when the order changed.
+export function advanceTimers(room, now) {
   const order = room.game?.order;
-  if (order?.status !== "COOKING" || now < order.cookEndsAt) return false;
-  order.status = "READY_TO_DELIVER";
-  return true;
+  if (order?.status === "READING_MENU" && now >= order.readEndsAt) {
+    order.status = "READY_TO_ORDER";
+    return true;
+  }
+  if (order?.status === "COOKING" && now >= order.cookEndsAt) {
+    order.status = "READY_TO_DELIVER";
+    return true;
+  }
+  return false;
 }

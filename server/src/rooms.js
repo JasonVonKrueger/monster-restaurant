@@ -8,7 +8,7 @@ import {
 import {
   GAME_ACTIONS,
   applyGameAction,
-  advanceCooking,
+  advanceTimers,
 } from "./game/restaurant.js";
 const fail = (message) => {
   throw new Error(message);
@@ -130,7 +130,7 @@ export class Rooms {
         fail("Another hug in a little moment.");
       player.lastHug = this.now();
     } else {
-      advanceCooking(room, this.now());
+      advanceTimers(room, this.now());
       applyGameAction(room, player, input, this.now());
     }
     player.actions.add(input.actionId);

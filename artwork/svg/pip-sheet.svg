@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1840 500" width="1840" height="500">
+  <!-- Pip sprite sheet: 4 frames of 460x500, transparent background.
+       Frame order: 0 idle, 1 blink, 2 wave, 3 happy. Parts live in <defs>; each frame composes them. -->
+  <defs>
+    <g id="back">
+      <!-- antennae -->
+      <path d="M222 300 C206 262 192 250 176 246" fill="none"/>
+      <path d="M318 300 C334 262 348 250 364 246" fill="none"/>
+      <circle cx="172" cy="244" r="12" fill="#ffd84d"/>
+      <circle cx="368" cy="244" r="12" fill="#ffd84d"/>
+      <!-- feet -->
+      <ellipse cx="218" cy="618" rx="36" ry="18" fill="#c43d80"/>
+      <ellipse cx="322" cy="618" rx="36" ry="18" fill="#c43d80"/>
+      <!-- body -->
+      <path d="M270 282 C362 282 392 360 396 450 C400 548 372 612 270 612 C168 612 140 548 144 450 C148 360 178 282 270 282 Z" fill="#e8579b"/>
+      <path d="M178 400 C170 470 180 540 214 580" fill="none" stroke="#c43d80" stroke-width="10" opacity="0.5"/>
+      <ellipse cx="270" cy="520" rx="78" ry="70" fill="#f7a3c9" stroke="none"/>
+      <!-- chef hat -->
+      <rect x="218" y="262" width="104" height="34" rx="8" fill="#ffffff"/>
+      <path d="M222 266 C196 262 190 222 216 212 C214 186 248 176 262 194 C272 172 308 176 310 202 C336 196 350 232 324 264 Z" fill="#ffffff"/>
+      <path d="M258 214 C262 230 260 246 256 258 M290 210 C292 228 292 244 290 258" fill="none" stroke="#d9d3e3" stroke-width="3"/>
+      <!-- brows and cheeks -->
+      <path d="M204 312 Q226 302 246 312 M294 312 Q314 302 336 312" fill="none" stroke-width="5"/>
+      <ellipse cx="196" cy="420" rx="16" ry="10" fill="#ff7fb1" stroke="none"/>
+      <ellipse cx="344" cy="420" rx="16" ry="10" fill="#ff7fb1" stroke="none"/>
+    </g>
+
+    <g id="eyes-open">
+      <ellipse cx="230" cy="358" rx="34" ry="40" fill="#ffffff"/>
+      <ellipse cx="310" cy="358" rx="34" ry="40" fill="#ffffff"/>
+      <circle cx="238" cy="368" r="15" fill="#2b1d3a" stroke="none"/>
+      <circle cx="302" cy="368" r="15" fill="#2b1d3a" stroke="none"/>
+      <circle cx="243" cy="362" r="5" fill="#ffffff" stroke="none"/>
+      <circle cx="307" cy="362" r="5" fill="#ffffff" stroke="none"/>
+    </g>
+    <g id="eyes-closed" fill="none" stroke-width="6">
+      <path d="M200 362 Q230 382 260 362"/>
+      <path d="M280 362 Q310 382 340 362"/>
+    </g>
+    <g id="eyes-happy" fill="none" stroke-width="6">
+      <path d="M202 372 Q230 336 258 372"/>
+      <path d="M282 372 Q310 336 338 372"/>
+    </g>
+
+    <g id="mouth-smile">
+      <path d="M226 418 Q270 476 314 418 Q270 434 226 418 Z" fill="#7a1f4c"/>
+      <path d="M250 442 Q270 430 290 442 Q270 458 250 442 Z" fill="#ff6f8f" stroke="none"/>
+      <path d="M258 424 L264 436 L270 426 Z" fill="#ffffff" stroke-width="2.5"/>
+    </g>
+    <g id="mouth-open">
+      <path d="M220 412 Q270 506 320 412 Q270 426 220 412 Z" fill="#7a1f4c"/>
+      <path d="M244 462 Q270 444 296 462 Q270 486 244 462 Z" fill="#ff6f8f" stroke="none"/>
+      <path d="M256 419 L263 433 L270 421 Z" fill="#ffffff" stroke-width="2.5"/>
+    </g>
+
+    <!-- arms are an ink stroke under a pink stroke, so they read as outlined tubes -->
+    <g id="arm-left-wave">
+      <path d="M152 470 C116 452 100 418 106 392" fill="none" stroke-width="22"/>
+      <path d="M152 470 C116 452 100 418 106 392" fill="none" stroke="#e8579b" stroke-width="14"/>
+      <circle cx="106" cy="388" r="15" fill="#e8579b"/>
+    </g>
+    <g id="arm-left-wave-high">
+      <path d="M152 460 C128 432 124 392 138 360" fill="none" stroke-width="22"/>
+      <path d="M152 460 C128 432 124 392 138 360" fill="none" stroke="#e8579b" stroke-width="14"/>
+      <circle cx="140" cy="356" r="15" fill="#e8579b"/>
+    </g>
+    <g id="arm-right-spoon">
+      <path d="M388 476 C420 486 436 506 438 530" fill="none" stroke-width="22"/>
+      <path d="M388 476 C420 486 436 506 438 530" fill="none" stroke="#e8579b" stroke-width="14"/>
+      <path d="M446 528 L470 452" stroke-width="12"/>
+      <path d="M446 528 L470 452" stroke="#c98a4b" stroke-width="6"/>
+      <ellipse cx="474" cy="436" rx="13" ry="20" fill="#c98a4b" transform="rotate(18 474 436)"/>
+      <circle cx="440" cy="532" r="15" fill="#e8579b"/>
+    </g>
+    <g id="arm-right-spoon-up">
+      <path d="M388 456 C420 438 432 408 430 378" fill="none" stroke-width="22"/>
+      <path d="M388 456 C420 438 432 408 430 378" fill="none" stroke="#e8579b" stroke-width="14"/>
+      <path d="M436 380 L458 304" stroke-width="12"/>
+      <path d="M436 380 L458 304" stroke="#c98a4b" stroke-width="6"/>
+      <ellipse cx="462" cy="288" rx="13" ry="20" fill="#c98a4b" transform="rotate(16 462 288)"/>
+      <circle cx="430" cy="374" r="15" fill="#e8579b"/>
+    </g>
+  </defs>
+
+  <!-- art was drawn in scene coordinates; shift by (-40, -160) into each 460x500 cell -->
+  <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <g transform="translate(-40 -160)">
+      <use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/>
+      <use href="#arm-left-wave"/><use href="#arm-right-spoon"/>
+    </g>
+    <g transform="translate(420 -160)">
+      <use href="#back"/><use href="#eyes-closed"/><use href="#mouth-smile"/>
+      <use href="#arm-left-wave"/><use href="#arm-right-spoon"/>
+    </g>
+    <g transform="translate(880 -160)">
+      <use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/>
+      <use href="#arm-left-wave-high"/><use href="#arm-right-spoon"/>
+    </g>
+    <g transform="translate(1340 -160)">
+      <use href="#back"/><use href="#eyes-happy"/><use href="#mouth-open"/>
+      <use href="#arm-left-wave-high"/><use href="#arm-right-spoon-up"/>
+    </g>
+  </g>
+</svg>

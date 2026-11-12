@@ -19,25 +19,6 @@ export function wiggle(scene, target) {
     onComplete: () => target.setAngle(0),
   });
 }
-export function fly(scene, target, x, y) {
-  const from = { x: target.x, y: target.y },
-    control = { x: (from.x + x) / 2, y: Math.min(from.y, y) - 100 };
-  scene.tweens.addCounter({
-    from: 0,
-    to: 1,
-    duration: 650,
-    ease: "Sine.inOut",
-    onUpdate: (tween) => {
-      const t = tween.getValue(),
-        u = 1 - t;
-      target.setPosition(
-        u * u * from.x + 2 * u * t * control.x + t * t * x,
-        u * u * from.y + 2 * u * t * control.y + t * t * y,
-      );
-    },
-    onComplete: () => target.destroy(),
-  });
-}
 export function burst(
   scene,
   { x = 270, y = 440, kind = "sparkles", count = 12 } = {},

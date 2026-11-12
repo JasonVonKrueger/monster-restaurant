@@ -12,7 +12,8 @@
     "start": "node server/src/index.js",
     "test": "node --test",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "art": "node scripts/export-art.js"
   },
   "devDependencies": {
     "eslint": "^9.0.0",

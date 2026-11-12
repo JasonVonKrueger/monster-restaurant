@@ -1,4 +1,4 @@
-import { advanceCooking } from "./game/restaurant.js";
+import { advanceTimers } from "./game/restaurant.js";
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -21,11 +21,11 @@ export function createApp() {
     for (const room of rooms.rooms.values()) publish(room);
   }, 30000);
   cleanup.unref();
-  const cooking = setInterval(() => {
+  const timers = setInterval(() => {
     for (const room of rooms.rooms.values())
-      if (advanceCooking(room, Date.now())) publish(room);
+      if (advanceTimers(room, Date.now())) publish(room);
   }, 100);
-  cooking.unref();
+  timers.unref();
   io.on("connection", (socket) => {
     let membership;
     let requests = [];
@@ -101,7 +101,7 @@ export function createApp() {
     rooms,
     close: () => {
       clearInterval(cleanup);
-      clearInterval(cooking);
+      clearInterval(timers);
       return new Promise((resolve) => io.close(resolve));
     },
   };

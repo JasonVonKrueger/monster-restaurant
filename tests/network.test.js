@@ -195,6 +195,12 @@ test(
       );
       await act(dining, "START");
       await act(dining, "WELCOME");
+      const readyToOrder = untilState(
+        dining,
+        (s) => s.game?.order.status === "READY_TO_ORDER",
+      );
+      await act(dining, "GIVE_MENU");
+      await readyToOrder;
       await act(dining, "SEND_ORDER");
       for (const ingredientId of ["dough", "sauce", "cheese", "strawberry"])
         await act(kitchen, "ADD_INGREDIENT", { ingredientId });

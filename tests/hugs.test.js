@@ -2,8 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { Rooms } from "../server/src/rooms.js";
 import { HUG_COOLDOWN_MS } from "../shared/constants.js";
-import { COOK_MS, PIZZA } from "../shared/recipes.js";
-import { advanceCooking } from "../server/src/game/restaurant.js";
+import { COOK_MS, MENU_READ_MS, PIZZA } from "../shared/recipes.js";
+import { advanceTimers } from "../server/src/game/restaurant.js";
 test("hugs work in the lobby and every order phase without changing game state", () => {
   let now = 1000,
     id = 0;
@@ -34,6 +34,11 @@ test("hugs work in the lobby and every order phase without changing game state",
   hug();
   act(dining, "WELCOME");
   hug();
+  act(dining, "GIVE_MENU");
+  hug();
+  assert.equal(room.game.order.status, "READING_MENU");
+  advanceTimers(room, now + MENU_READ_MS);
+  hug();
   act(dining, "SEND_ORDER");
   hug();
   for (const ingredientId of PIZZA.requiredIngredients) {
@@ -43,7 +48,7 @@ test("hugs work in the lobby and every order phase without changing game state",
   act(kitchen, "COOK");
   hug();
   assert.equal(room.game.order.status, "COOKING");
-  advanceCooking(room, now + COOK_MS);
+  advanceTimers(room, now + COOK_MS);
   hug();
   act(kitchen, "DELIVER");
   hug();

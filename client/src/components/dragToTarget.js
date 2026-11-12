@@ -1,24 +1,28 @@
-// Dragging only changes presentation. The server still decides whether a drop
-// adds this ingredient to this particular order.
-export function ingredientDrag(
+// Drag an object onto a drop zone. Dragging only changes presentation: onDrop asks
+// the server, which still decides whether anything happens. If onDrop returns a
+// promise, the object waits where it was dropped and goes home only if the answer
+// is false (an accepted action redraws the scene anyway). A missed drop returns the
+// object home and shows missHint.
+export function dragToTarget(
   scene,
-  tile,
-  { ingredientId, orderId, target, highlight },
+  item,
+  { target, highlight, onDrop, missHint },
 ) {
-  const home = { x: tile.x, y: tile.y };
+  const home = { x: item.x, y: item.y, scale: item.scaleX };
   let dragging = false,
     overTarget = false,
     returnTween;
-  scene.input.setDraggable(tile);
+  if (!item.input) item.setInteractive({ useHandCursor: true });
+  scene.input.setDraggable(item);
   const resetHighlight = () => highlight(false);
   const returnHome = () => {
-    if (!tile.scene) return;
-    tile.setDepth(0);
+    if (!item.scene) return;
+    item.setDepth(0);
     returnTween = scene.tweens.add({
-      targets: tile,
+      targets: item,
       x: home.x,
       y: home.y,
-      scale: 1,
+      scale: home.scale,
       duration: 200,
       ease: "Back.out",
     });
@@ -30,55 +34,53 @@ export function ingredientDrag(
     resetHighlight();
     returnHome();
   };
-  tile.on("pointerdown", () => {
+  item.on("pointerdown", () => {
     scene.audio.unlock();
     scene.audio.play("tap");
   });
-  tile.on("dragstart", () => {
+  item.on("dragstart", () => {
     returnTween?.stop();
     dragging = true;
     overTarget = false;
-    tile.setDepth(25).setScale(1.08);
+    item.setDepth(25).setScale(home.scale * 1.08);
   });
-  tile.on("drag", (_pointer, x, y) => {
+  item.on("drag", (_pointer, x, y) => {
     if (dragging)
-      tile.setPosition(
+      item.setPosition(
         Math.max(0, Math.min(540, x)),
         Math.max(0, Math.min(800, y)),
       );
   });
-  tile.on("dragenter", (_pointer, zone) => {
+  item.on("dragenter", (_pointer, zone) => {
     if (dragging && zone === target) {
       overTarget = true;
       highlight(true);
     }
   });
-  tile.on("dragleave", (_pointer, zone) => {
+  item.on("dragleave", (_pointer, zone) => {
     if (zone === target) {
       overTarget = false;
       resetHighlight();
     }
   });
-  tile.on("drop", (_pointer, zone) => {
+  item.on("drop", (_pointer, zone) => {
     if (!dragging || zone !== target) return;
-    // Capture the order from drag creation, not whichever order happens to be
-    // current when a delayed pointer event arrives.
     dragging = false;
     overTarget = false;
     resetHighlight();
-    returnHome();
-    scene.act("ADD_INGREDIENT", { ingredientId, orderId });
+    const answer = onDrop();
+    if (answer?.then) answer.then((accepted) => !accepted && returnHome());
+    else returnHome();
   });
-  tile.on("dragend", () => {
+  item.on("dragend", () => {
     if (!dragging) return;
     const missed = !overTarget;
     cancel();
-    if (missed)
-      scene.hint("Drag the ingredient onto the pizza. Let’s try again!");
+    if (missed) scene.hint(missHint);
   });
   scene.input.on("gameout", cancel);
   scene.game.events.on("blur", cancel);
-  tile.once("destroy", () => {
+  item.once("destroy", () => {
     dragging = false;
     returnTween?.stop();
     scene.input.off("gameout", cancel);

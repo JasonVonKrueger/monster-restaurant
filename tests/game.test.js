@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { Rooms } from "../server/src/rooms.js";
-import { advanceCooking } from "../server/src/game/restaurant.js";
-import { COOK_MS, PIZZA } from "../shared/recipes.js";
+import { advanceTimers } from "../server/src/game/restaurant.js";
+import { COOK_MS, MENU_READ_MS, PIZZA } from "../shared/recipes.js";
+import { MONSTERS } from "../shared/monsters.js";
 function setup() {
   let time = 1000,
     serial = 0;
@@ -21,10 +22,16 @@ function setup() {
       actionId,
       payload: { orderId: room.game?.order.id, ...payload },
     });
+  const order = () => {
+    act(dining, "WELCOME");
+    act(dining, "GIVE_MENU");
+    time += MENU_READ_MS;
+    advanceTimers(room, time);
+    act(dining, "SEND_ORDER");
+  };
   const prepare = () => {
     act(dining, "START");
-    act(dining, "WELCOME");
-    act(dining, "SEND_ORDER");
+    order();
     for (const ingredientId of PIZZA.requiredIngredients)
       act(kitchen, "ADD_INGREDIENT", { ingredientId });
   };
@@ -34,10 +41,11 @@ function setup() {
     dining,
     kitchen,
     act,
+    order,
     prepare,
     advance: (ms) => {
       time += ms;
-      return advanceCooking(room, time);
+      return advanceTimers(room, time);
     },
   };
 }
@@ -68,7 +76,7 @@ test("full pizza loop awards shared rewards once and starts a fresh order", () =
   assert.throws(() => act(dining, "WELCOME", { orderId: id }), /new customer/);
 });
 test("roles, legal transitions and ingredients are validated without punishing mistakes", () => {
-  const { room, dining, kitchen, act } = setup();
+  const { room, dining, kitchen, act, order } = setup();
   assert.throws(() => act(kitchen, "START"), /friend/);
   act(dining, "START");
   assert.throws(() => act(kitchen, "DELIVER"), /little step/);
@@ -77,14 +85,13 @@ test("roles, legal transitions and ingredients are validated without punishing m
     () => act(kitchen, "ADD_INGREDIENT", { ingredientId: "dough" }),
     /little step/,
   );
-  act(dining, "WELCOME");
-  act(dining, "SEND_ORDER");
+  order();
   assert.throws(
     () => act(dining, "ADD_INGREDIENT", { ingredientId: "dough" }),
     /friend/,
   );
   assert.throws(
-    () => act(kitchen, "ADD_INGREDIENT", { ingredientId: "pickle" }),
+    () => act(kitchen, "ADD_INGREDIENT", { ingredientId: "lemon" }),
     /silly pizza/,
   );
   assert.throws(
@@ -116,13 +123,12 @@ test("disconnect during cooking does not prevent completion or duplicate rewards
   assert.equal(room.game.stars, 3);
 });
 test("start waits for two connected players; malicious payloads cannot choose rewards", () => {
-  const { room, rooms, dining, kitchen, act, advance } = setup();
+  const { room, rooms, dining, kitchen, act, advance, order } = setup();
   rooms.disconnect(room.code, kitchen.id, "k");
   assert.throws(() => act(dining, "START"), /Invite/);
   rooms.resume({ code: room.code, token: kitchen.token }, "k2");
   act(dining, "START");
-  act(dining, "WELCOME");
-  act(dining, "SEND_ORDER");
+  order();
   for (const ingredientId of PIZZA.requiredIngredients)
     act(kitchen, "ADD_INGREDIENT", { ingredientId });
   act(kitchen, "COOK");
@@ -131,4 +137,43 @@ test("start waits for two connected players; malicious payloads cannot choose re
   act(dining, "SERVE", { stars: 999, coins: 999, role: "kitchen" });
   assert.equal(room.game.stars, 3);
   assert.equal(room.game.coins, 5);
+});
+
+test("each visit brings one of the five monsters, never the same one twice in a row", () => {
+  const { room, dining, act } = setup();
+  const ids = MONSTERS.map((m) => m.id);
+  assert.equal(ids.length, 5);
+  act(dining, "START");
+  const seen = [room.game.order.monsterId];
+  for (let visit = 0; visit < 60; visit++) {
+    // Skip straight to a finished order; the full loop is covered above.
+    room.game.order.status = "COMPLETE";
+    assert.equal(act(dining, "NEXT_CUSTOMER"), true);
+    const id = room.game.order.monsterId;
+    assert.ok(ids.includes(id));
+    assert.notEqual(id, seen.at(-1));
+    seen.push(id);
+  }
+  assert.deepEqual(new Set(seen), new Set(ids));
+});
+
+test("the monster reads the menu on the server clock before the order can be sent", () => {
+  const { room, rooms, dining, kitchen, act, advance } = setup();
+  act(dining, "START");
+  assert.throws(() => act(dining, "GIVE_MENU"), /little step/);
+  act(dining, "WELCOME");
+  assert.throws(() => act(dining, "SEND_ORDER"), /little step/);
+  assert.throws(() => act(kitchen, "GIVE_MENU"), /friend/);
+  act(dining, "GIVE_MENU", {}, "menu");
+  assert.equal(room.game.order.status, "READING_MENU");
+  assert.equal(act(dining, "GIVE_MENU", {}, "menu"), false);
+  assert.throws(() => act(dining, "SEND_ORDER"), /little step/);
+  // A refresh while reading does not interrupt the server's timer.
+  rooms.disconnect(room.code, dining.id, "d");
+  assert.equal(advance(MENU_READ_MS - 1), false);
+  assert.equal(advance(1), true);
+  assert.equal(room.game.order.status, "READY_TO_ORDER");
+  rooms.resume({ code: room.code, token: dining.token }, "d2");
+  act(dining, "SEND_ORDER");
+  assert.equal(room.game.order.status, "ORDER_SENT");
 });

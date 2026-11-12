@@ -129,8 +129,9 @@ $("room-form").addEventListener("submit", (event) => {
   enter(EVENTS.CREATE);
 });
 $("join").onclick = () => enter(EVENTS.JOIN);
+// Resolves true when the server accepted the action, false otherwise.
 async function sendAction(type, payload = {}) {
-  if (busy) return;
+  if (busy) return false;
   busy = true;
   try {
     await request(EVENTS.ACTION, {
@@ -139,11 +140,13 @@ async function sendAction(type, payload = {}) {
       actionId: crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
     });
     message("");
+    return true;
   } catch (error) {
     message(error.message);
     window.dispatchEvent(
       new CustomEvent("restaurant:hint", { detail: error.message }),
     );
+    return false;
   } finally {
     busy = false;
   }
@@ -170,18 +173,6 @@ async function sendHug() {
     hugPending = false;
   }
 }
-$("share").onclick = async () => {
-  const url = new URL(location.href);
-  url.search = "";
-  url.searchParams.set("room", state.code);
-  url.hash = "";
-  try {
-    await navigator.clipboard.writeText(url.href);
-    message("Invitation copied! Open it on your friend’s phone.");
-  } catch {
-    message(`Invite your friend: ${url.href}`);
-  }
-};
 $("leave").onclick = async () => {
   try {
     await request(EVENTS.LEAVE);

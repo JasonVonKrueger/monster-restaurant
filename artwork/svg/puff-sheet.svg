@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400" width="2000" height="400">
+  <!-- Puff: a fluffy yellow cloud monster with tiny pink wings.
+       5 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy. -->
+  <defs>
+    <!-- the fluffy outline: draw the circles with a thick ink stroke, then again without,
+         so only the outer edge of the stroke shows -->
+    <g id="fluff">
+      <circle cx="200" cy="236" r="118"/>
+      <circle cx="112" cy="176" r="48"/><circle cx="162" cy="136" r="50"/>
+      <circle cx="238" cy="136" r="50"/><circle cx="288" cy="176" r="48"/>
+      <circle cx="92" cy="252" r="46"/><circle cx="308" cy="252" r="46"/>
+      <circle cx="124" cy="316" r="42"/><circle cx="276" cy="316" r="42"/>
+      <circle cx="200" cy="334" r="46"/>
+    </g>
+    <g id="back">
+      <path d="M82 182 C42 150 22 168 28 196 C42 190 52 200 50 214 C64 206 76 210 84 222 Z" fill="#ffb3d1"/>
+      <path d="M318 182 C358 150 378 168 372 196 C358 190 348 200 350 214 C336 206 324 210 316 222 Z" fill="#ffb3d1"/>
+      <ellipse cx="156" cy="372" rx="30" ry="14" fill="#f5b83d"/>
+      <ellipse cx="244" cy="372" rx="30" ry="14" fill="#f5b83d"/>
+      <use href="#fluff" fill="#ffe066" stroke-width="8"/>
+      <use href="#fluff" fill="#ffe066" stroke="none"/>
+      <path d="M104 300 C120 330 150 348 184 354" fill="none" stroke="#f5c84a" stroke-width="12"/>
+      <g fill="#f5a33d" stroke="none">
+        <circle cx="150" cy="248" r="3"/><circle cx="160" cy="254" r="3"/><circle cx="146" cy="258" r="3"/>
+        <circle cx="250" cy="248" r="3"/><circle cx="240" cy="254" r="3"/><circle cx="254" cy="258" r="3"/>
+      </g>
+      <ellipse cx="122" cy="264" rx="16" ry="10" fill="#ffa3c4" stroke="none"/>
+      <ellipse cx="278" cy="264" rx="16" ry="10" fill="#ffa3c4" stroke="none"/>
+    </g>
+    <g id="eyes-open">
+      <ellipse cx="166" cy="206" rx="30" ry="36" fill="#ffffff"/>
+      <ellipse cx="234" cy="206" rx="30" ry="36" fill="#ffffff"/>
+      <circle cx="170" cy="214" r="14" fill="#2b1d3a" stroke="none"/>
+      <circle cx="230" cy="214" r="14" fill="#2b1d3a" stroke="none"/>
+      <circle cx="175" cy="208" r="5" fill="#ffffff" stroke="none"/>
+      <circle cx="235" cy="208" r="5" fill="#ffffff" stroke="none"/>
+    </g>
+    <g id="eyes-closed" fill="none" stroke-width="6">
+      <path d="M140 212 Q166 228 192 212"/><path d="M208 212 Q234 228 260 212"/>
+    </g>
+    <g id="eyes-happy" fill="none" stroke-width="6">
+      <path d="M142 220 Q166 190 190 220"/><path d="M210 220 Q234 190 258 220"/>
+    </g>
+    <g id="mouth-smile">
+      <path d="M172 266 Q200 304 228 266 Q200 278 172 266 Z" fill="#6b1f4f"/>
+      <path d="M186 284 Q200 276 214 284 Q200 296 186 284 Z" fill="#ff7aa8" stroke="none"/>
+    </g>
+    <g id="mouth-chomp">
+      <ellipse cx="200" cy="288" rx="32" ry="30" fill="#6b1f4f"/>
+      <ellipse cx="200" cy="304" rx="18" ry="9" fill="#ff7aa8" stroke="none"/>
+    </g>
+    <g id="mouth-grin">
+      <path d="M158 262 Q200 330 242 262 Q200 276 158 262 Z" fill="#6b1f4f"/>
+      <path d="M178 296 Q200 282 222 296 Q200 314 178 296 Z" fill="#ff7aa8" stroke="none"/>
+    </g>
+    <g id="arm-left-down">
+      <path d="M58 280 C40 292 34 308 38 324" fill="none" stroke-width="24"/>
+      <path d="M58 280 C40 292 34 308 38 324" fill="none" stroke="#ffe066" stroke-width="16"/>
+      <circle cx="38" cy="328" r="15" fill="#ffe066"/>
+    </g>
+    <g id="arm-right-down">
+      <path d="M342 280 C360 292 366 308 362 324" fill="none" stroke-width="24"/>
+      <path d="M342 280 C360 292 366 308 362 324" fill="none" stroke="#ffe066" stroke-width="16"/>
+      <circle cx="362" cy="328" r="15" fill="#ffe066"/>
+    </g>
+    <g id="arm-left-up">
+      <path d="M58 268 C36 250 30 226 34 200" fill="none" stroke-width="24"/>
+      <path d="M58 268 C36 250 30 226 34 200" fill="none" stroke="#ffe066" stroke-width="16"/>
+      <circle cx="34" cy="194" r="15" fill="#ffe066"/>
+    </g>
+    <g id="arm-right-up">
+      <path d="M342 268 C364 250 370 226 366 200" fill="none" stroke-width="24"/>
+      <path d="M342 268 C364 250 370 226 366 200" fill="none" stroke="#ffe066" stroke-width="16"/>
+      <circle cx="366" cy="194" r="15" fill="#ffe066"/>
+    </g>
+  </defs>
+  <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <g><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
+    <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
+  </g>
+</svg>

@@ -1,7 +1,41 @@
 import { blink } from "../animations/blink.js";
-// Loaded character art with a procedural fallback if an image is unavailable.
-export function monster(scene, x, y, scale = 1) {
+import { animateSheet } from "./poses.js";
+
+// Every monster sheet has the same frames: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy.
+const MONSTER_POSES = {
+  wave: [
+    [2, 220],
+    [0, 160],
+    [2, 220],
+    [0, 160],
+    [2, 260],
+  ],
+  happy: [[4, 900]],
+  eat: [
+    [3, 160],
+    [0, 140],
+    [3, 160],
+    [0, 140],
+    [3, 160],
+    [4, 900],
+  ],
+};
+
+// A monster customer, centred on (x, y). The container gets pose(name); it does
+// nothing on the older single-image and procedural Bubbles fallbacks.
+export function monster(scene, x, y, scale = 1, id = "bubbles") {
   const c = scene.add.container(x, y).setScale(scale);
+  c.pose = () => {};
+  const sheet = [`${id}-sheet`, "bubbles-sheet"].find((key) =>
+    scene.textures.exists(key),
+  );
+  if (sheet) {
+    const sprite = scene.add.sprite(0, 0, sheet, 0).setScale(0.8);
+    c.add(sprite);
+    animateSheet(scene, sprite, MONSTER_POSES);
+    c.pose = (name) => sprite.pose(name);
+    return c;
+  }
   if (scene.textures.exists("bubbles")) {
     const image = scene.add.image(0, -8, "bubbles");
     image.setScale(250 / image.width);
@@ -55,9 +89,10 @@ export function monster(scene, x, y, scale = 1) {
 }
 export function pizza(scene, x, y, ingredients, scale = 1) {
   const c = scene.add.container(x, y).setScale(scale);
-  c.add(scene.add.ellipse(0, 10, 215, 160, 0xffffff));
+  const ink = 0x2b1d3a;
+  c.add(scene.add.ellipse(0, 10, 215, 160, 0xffffff).setStrokeStyle(4, ink));
   if (!ingredients.length) return c;
-  c.add(scene.add.circle(0, 0, 86, 0xeabf7d));
+  c.add(scene.add.circle(0, 0, 86, 0xeabf7d).setStrokeStyle(4, ink));
   c.add(
     scene.add.circle(
       0,
@@ -79,6 +114,8 @@ export function pizza(scene, x, y, ingredients, scale = 1) {
       const berry = scene.add.graphics();
       berry.fillStyle(0xe85875);
       berry.fillTriangle(dx - 12, dy - 9, dx + 12, dy - 9, dx, dy + 16);
+      berry.lineStyle(2.5, ink);
+      berry.strokeTriangle(dx - 12, dy - 9, dx + 12, dy - 9, dx, dy + 16);
       berry.fillStyle(0x7fba70);
       berry.fillEllipse(dx, dy - 10, 20, 8);
       c.add(berry);

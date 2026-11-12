@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400" width="2000" height="400">
+  <!-- Mo: a tall green one-eyed monster with a leaf sprout.
+       5 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy. -->
+  <defs>
+    <g id="back">
+      <ellipse cx="160" cy="354" rx="36" ry="17" fill="#5fb34d"/>
+      <ellipse cx="240" cy="354" rx="36" ry="17" fill="#5fb34d"/>
+      <path d="M200 74 C198 60 198 50 202 40" fill="none" stroke-width="5"/>
+      <path d="M202 46 C214 28 238 26 246 34 C236 48 216 54 202 46 Z" fill="#a8e88c"/>
+      <path d="M110 340 C98 250 100 150 130 100 C156 62 244 62 270 100 C300 150 302 250 290 340 C258 364 142 364 110 340 Z" fill="#7ed36a"/>
+      <path d="M128 280 C134 316 156 336 186 344" fill="none" stroke="#5fb34d" stroke-width="12" opacity="0.6"/>
+      <g fill="#64bd52" stroke="none">
+        <circle cx="140" cy="130" r="7"/><circle cx="266" cy="150" r="5"/>
+        <circle cx="262" cy="300" r="8"/><circle cx="136" cy="230" r="4"/>
+      </g>
+      <ellipse cx="136" cy="262" rx="16" ry="10" fill="#ff8fb0" stroke="none"/>
+      <ellipse cx="264" cy="262" rx="16" ry="10" fill="#ff8fb0" stroke="none"/>
+    </g>
+    <g id="eyes-open">
+      <ellipse cx="200" cy="176" rx="52" ry="56" fill="#ffffff"/>
+      <circle cx="206" cy="190" r="24" fill="#2b1d3a" stroke="none"/>
+      <circle cx="214" cy="180" r="8" fill="#ffffff" stroke="none"/>
+    </g>
+    <g id="eyes-closed" fill="none" stroke-width="6"><path d="M150 184 Q200 214 250 184"/></g>
+    <g id="eyes-happy" fill="none" stroke-width="6"><path d="M152 198 Q200 146 248 198"/></g>
+    <g id="mouth-smile">
+      <path d="M168 262 Q200 306 232 262 Q200 274 168 262 Z" fill="#6b1f4f"/>
+      <path d="M184 282 Q200 272 216 282 Q200 296 184 282 Z" fill="#ff7aa8" stroke="none"/>
+    </g>
+    <g id="mouth-chomp">
+      <ellipse cx="200" cy="284" rx="36" ry="32" fill="#6b1f4f"/>
+      <ellipse cx="200" cy="302" rx="20" ry="10" fill="#ff7aa8" stroke="none"/>
+    </g>
+    <g id="mouth-grin">
+      <path d="M154 258 Q200 330 246 258 Q200 272 154 258 Z" fill="#6b1f4f"/>
+      <path d="M176 294 Q200 278 224 294 Q200 314 176 294 Z" fill="#ff7aa8" stroke="none"/>
+    </g>
+    <g id="arm-left-down">
+      <path d="M112 250 C88 262 78 282 82 302" fill="none" stroke-width="24"/>
+      <path d="M112 250 C88 262 78 282 82 302" fill="none" stroke="#7ed36a" stroke-width="16"/>
+      <circle cx="82" cy="306" r="15" fill="#7ed36a"/>
+    </g>
+    <g id="arm-right-down">
+      <path d="M288 250 C312 262 322 282 318 302" fill="none" stroke-width="24"/>
+      <path d="M288 250 C312 262 322 282 318 302" fill="none" stroke="#7ed36a" stroke-width="16"/>
+      <circle cx="318" cy="306" r="15" fill="#7ed36a"/>
+    </g>
+    <g id="arm-left-up">
+      <path d="M112 240 C84 222 74 196 78 168" fill="none" stroke-width="24"/>
+      <path d="M112 240 C84 222 74 196 78 168" fill="none" stroke="#7ed36a" stroke-width="16"/>
+      <circle cx="78" cy="162" r="15" fill="#7ed36a"/>
+    </g>
+    <g id="arm-right-up">
+      <path d="M288 240 C316 222 326 196 322 168" fill="none" stroke-width="24"/>
+      <path d="M288 240 C316 222 326 196 322 168" fill="none" stroke="#7ed36a" stroke-width="16"/>
+      <circle cx="322" cy="162" r="15" fill="#7ed36a"/>
+    </g>
+  </defs>
+  <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <g><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
+    <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
+  </g>
+</svg>

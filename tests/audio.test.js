@@ -162,3 +162,17 @@ test("important effects are audible immediately after a tap without repeating id
   f.audio.play("hug");
   assert.equal(f.oscillators, 7);
 });
+
+test("spoken guidance names the visiting monster", () => {
+  const order = {
+    status: "CUSTOMER_ARRIVED",
+    monsterId: "gloop",
+    requiredIngredients: ["dough"],
+    addedIngredients: [],
+  };
+  assert.match(guidanceFor({ game: { order } }, "dining"), /Gloop is here/);
+  assert.match(guidanceFor({ game: { order } }, "kitchen"), /welcoming Gloop/);
+  order.status = "DELIVERED";
+  order.monsterId = "puff";
+  assert.match(guidanceFor({ game: { order } }, "dining"), /serve Puff/);
+});
