@@ -210,17 +210,19 @@ export class RestaurantScene extends Phaser.Scene {
       25,
     );
     const online = this.game.registry.get("online");
+    // Hug and sound buttons sit inside the header panel (x 28–512, y 24–120),
+    // centred vertically with an even 12px gap at each side.
     this.hugButton = this.button(
-      65,
-      58,
+      80,
+      70,
       80,
       "♥",
       () => this.game.registry.get("sendHug")(),
       { fontSize: 36 },
     );
     this.button(
-      475,
-      58,
+      460,
+      70,
       80,
       "🔊",
       () => {
