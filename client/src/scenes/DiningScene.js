@@ -218,7 +218,7 @@ export class DiningScene extends RestaurantScene {
     // A hungry monster says so, unless the sign is telling the child what to do.
     const waitingOnly = !copy[2] && status !== "CUSTOMER_SEATED";
     const sign =
-      this.sad && waitingOnly ? `😢 ${name} is getting hungry…` : copy[0];
+      this.sad && waitingOnly ? `😟 ${name} is getting hungry…` : copy[0];
     this.plaque(270, 152, sign, 22);
     if (copy[2])
       this.button(270, BUTTON_Y, 450, copy[1], () => this.act(copy[2]), {

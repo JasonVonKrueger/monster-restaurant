@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 400" width="2400" height="400">
-  <!-- Bubbles sprite sheet: 6 frames of 400x400, transparent background.
-       Frame order: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad. Parts live in <defs>. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2800 400" width="2800" height="400">
+  <!-- Bubbles sprite sheet: 7 frames of 400x400, transparent background.
+       Frame order: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad, 6 sad blink. Parts live in <defs>. -->
   <defs>
     <g id="back">
       <!-- feet -->
@@ -78,9 +78,8 @@
       <ellipse cx="242" cy="198" rx="40" ry="46" fill="#ffffff"/>
       <circle cx="162" cy="220" r="17" fill="#2b1d3a" stroke="none"/>
       <circle cx="238" cy="220" r="17" fill="#2b1d3a" stroke="none"/>
-      <path d="M124 146 L182 132 M218 132 L276 146" fill="none" stroke-width="6"/>
-      <path d="M122 236 C116 246 116 254 122 256 C128 254 128 246 122 236 Z" fill="#8fd3ff" stroke-width="2.5"/>
     </g>
+    <g id="brows-sad"><path d="M124 146 L182 132 M218 132 L276 146" fill="none" stroke-width="6"/></g>
     <g id="mouth-frown"><path d="M176 290 Q200 266 224 290" fill="none" stroke-width="6"/></g>
   </defs>
 
@@ -105,6 +104,7 @@
       <use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/>
       <use href="#arm-left-up"/><use href="#arm-right-up"/>
     </g>
-    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
   </g>
 </svg>

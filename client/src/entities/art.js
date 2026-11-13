@@ -1,7 +1,8 @@
 import { blink } from "../animations/blink.js";
 import { animateSheet } from "./poses.js";
 
-// Every monster sheet has the same frames: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad.
+// Every monster sheet has the same frames: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy,
+// 5 sad, 6 sad blink.
 const MONSTER_POSES = {
   wave: [
     [2, 220],
@@ -33,7 +34,7 @@ export function monster(scene, x, y, scale = 1, id = "bubbles") {
   if (sheet) {
     const sprite = scene.add.sprite(0, 0, sheet, 0).setScale(0.8);
     c.add(sprite);
-    animateSheet(scene, sprite, MONSTER_POSES);
+    animateSheet(scene, sprite, MONSTER_POSES, { 0: 1, 5: 6 });
     c.pose = (name) => sprite.pose(name);
     c.setSad = (sad) => sprite.setRest(sad ? 5 : 0);
     return c;
@@ -92,7 +93,10 @@ export function monster(scene, x, y, scale = 1, id = "bubbles") {
 export function pizza(scene, x, y, ingredients, scale = 1) {
   const c = scene.add.container(x, y).setScale(scale);
   const ink = 0x2b1d3a;
-  c.add(scene.add.ellipse(0, 10, 215, 160, 0xffffff).setStrokeStyle(4, ink));
+  // A round plate, a little larger than the pizza (radius 86), with a rim.
+  c.add(scene.add.circle(0, 6, 106, ink, 0.3));
+  c.add(scene.add.circle(0, 0, 106, 0xffffff).setStrokeStyle(4, ink));
+  c.add(scene.add.circle(0, 0, 94, 0xf1ecf7));
   if (!ingredients.length) return c;
   c.add(scene.add.circle(0, 0, 86, 0xeabf7d).setStrokeStyle(4, ink));
   c.add(

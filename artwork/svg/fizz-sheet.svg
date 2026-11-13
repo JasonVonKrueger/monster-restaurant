@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 400" width="2400" height="400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2800 400" width="2800" height="400">
   <!-- Fizz: a wide orange three-eyed monster with a flame-shaped tuft.
-       6 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad. -->
+       7 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad, 6 sad blink. -->
   <defs>
     <g id="back">
       <ellipse cx="146" cy="356" rx="40" ry="17" fill="#e0782b"/>
@@ -71,9 +71,8 @@
       <circle cx="139" cy="228" r="10" fill="#2b1d3a" stroke="none"/>
       <circle cx="201" cy="206" r="13" fill="#2b1d3a" stroke="none"/>
       <circle cx="261" cy="228" r="10" fill="#2b1d3a" stroke="none"/>
-      <path d="M112 184 L160 174 M170 150 L200 140 L230 150 M240 174 L288 184" fill="none" stroke-width="5"/>
-      <path d="M114 244 C108 254 108 262 114 264 C120 262 120 254 114 244 Z" fill="#8fd3ff" stroke-width="2.5"/>
     </g>
+    <g id="brows-sad"><path d="M112 184 L160 174 M170 150 L200 140 L230 150 M240 174 L288 184" fill="none" stroke-width="5"/></g>
     <g id="mouth-frown"><path d="M176 296 Q200 272 224 296" fill="none" stroke-width="6"/></g>
   </defs>
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
@@ -82,6 +81,7 @@
     <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
     <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
     <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
-    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
   </g>
 </svg>

@@ -1,10 +1,10 @@
 import Phaser from "phaser";
 
 // Gives a character sprite random blinks, sprite.pose(name) and sprite.setRest(frame).
-// Every sheet uses frame 0 for idle and frame 1 for blink; poses are lists of
-// [frame, milliseconds] that end back on the resting frame (idle unless changed,
-// e.g. a sad face). Blinks only happen while resting on idle.
-export function animateSheet(scene, sprite, poses) {
+// Poses are lists of [frame, milliseconds] that end back on the resting frame (idle,
+// unless changed, e.g. to a sad face). `blinks` maps each resting frame to its blink
+// frame, so a sad monster keeps blinking with a sad face.
+export function animateSheet(scene, sprite, poses, blinks = { 0: 1 }) {
   let posing = null,
     rest = 0,
     blinkTimer;
@@ -33,9 +33,14 @@ export function animateSheet(scene, sprite, poses) {
   };
   const scheduleBlink = () => {
     blinkTimer = scene.time.delayedCall(Phaser.Math.Between(2400, 4800), () => {
-      if (!posing && rest === 0) {
-        show(1);
-        scene.time.delayedCall(130, () => !posing && rest === 0 && show(0));
+      const blink = blinks[rest],
+        resting = rest;
+      if (!posing && blink !== undefined) {
+        show(blink);
+        scene.time.delayedCall(
+          130,
+          () => !posing && rest === resting && show(rest),
+        );
       }
       scheduleBlink();
     });

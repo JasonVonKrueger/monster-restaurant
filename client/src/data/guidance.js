@@ -12,7 +12,7 @@ export function guidanceFor(snapshot, role) {
       const next = order.requiredIngredients[order.addedIngredients.length];
       return next
         ? `Drag the ${INGREDIENTS[next].label.toLowerCase()} onto the pizza!`
-        : "Tap the oven timer to bake your pizza!";
+        : "Drag the pizza into the oven to bake it!";
     }
     return {
       CUSTOMER_ARRIVED: `Your friend is welcoming ${name}. Tap Pip the chef for a giggle!`,

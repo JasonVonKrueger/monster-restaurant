@@ -24,8 +24,8 @@ const TRAY = {
 TRAY.perPage = TRAY.cols * TRAY.rows;
 TRAY.y = TRAY.top + TRAY.height / 2;
 const TRAY_IDS = Object.keys(INGREDIENTS);
-// The wall timer doubles as the oven switch; the oven's window is on the stove's left door.
-const TIMER = { x: 74, y: 262, r: 46 };
+// The wall timer shows baking progress; the oven's window is on the stove's left door.
+const TIMER = { x: 62, y: 236, r: 30 };
 const OVEN = { x: 130, y: 405 };
 const LOBBY_BUTTON_Y = 735;
 
@@ -34,7 +34,6 @@ export class KitchenScene extends RestaurantScene {
     super("kitchen", "kitchen");
     this.prepAt = PREP;
     this.trayPage = 0;
-    this.timerTarget = null;
   }
   // Where ingredient i sits on the tray, or the tray's middle if it is on another page.
   tileAt(i) {
@@ -71,35 +70,16 @@ export class KitchenScene extends RestaurantScene {
       this.add.image(270, 400, "kitchen-front");
     this.headerPanel();
   }
-  // The wall timer is the oven switch. When every ingredient is on, it glows and a
-  // finger points at it; tapping it bakes the pizza. While baking, the needle sweeps
-  // and the face fills, paced by the server clock.
+  // The wall timer shows the bake: the needle sweeps and the face fills while the
+  // pizza is in the oven, paced by the server clock.
   ovenTimer(order) {
     const { x, y, r } = TIMER,
-      half = r + 10;
-    const next = order?.requiredIngredients[order.addedIngredients.length];
-    const ready =
-      order?.status === "PREPARING" &&
-      !next &&
-      this.game.registry.get("online");
-    if (ready) {
-      const ring = this.add
-        .circle(x, y, half + 12, 0xfff2a8, 0.85)
-        .setStrokeStyle(4, 0xffd77f);
-      this.tweens.add({
-        targets: ring,
-        scale: 1.12,
-        alpha: 0.4,
-        duration: 650,
-        yoyo: true,
-        repeat: -1,
-      });
-    }
+      half = r + 8;
     const g = this.add.graphics();
     g.fillStyle(0x9aa6bc);
-    g.fillRoundedRect(x - half, y - half, half * 2, half * 2, 22);
+    g.fillRoundedRect(x - half, y - half, half * 2, half * 2, 14);
     g.lineStyle(4, INK);
-    g.strokeRoundedRect(x - half, y - half, half * 2, half * 2, 22);
+    g.strokeRoundedRect(x - half, y - half, half * 2, half * 2, 14);
     g.fillStyle(0xf7f4fb);
     g.fillCircle(x, y, r);
     g.strokeCircle(x, y, r);
@@ -107,23 +87,23 @@ export class KitchenScene extends RestaurantScene {
     for (let i = 0; i < 12; i++) {
       const a = (i / 12) * Math.PI * 2;
       g.lineBetween(
-        x + Math.cos(a) * (r - 11),
-        y + Math.sin(a) * (r - 11),
-        x + Math.cos(a) * (r - 4),
-        y + Math.sin(a) * (r - 4),
+        x + Math.cos(a) * (r - 8),
+        y + Math.sin(a) * (r - 8),
+        x + Math.cos(a) * (r - 3),
+        y + Math.sin(a) * (r - 3),
       );
     }
     const fill = this.add.graphics();
     const needle = this.add
-      .rectangle(x, y, 6, r - 9, 0xff4d6d)
+      .rectangle(x, y, 4, r - 6, 0xff4d6d)
       .setOrigin(0.5, 1);
-    this.add.circle(x, y, 7, INK);
-    this.add.text(x, y + 18, "🔥", { fontSize: "18px" }).setOrigin(0.5);
+    this.add.circle(x, y, 5, INK);
+    this.add.text(x, y + 12, "🔥", { fontSize: "12px" }).setOrigin(0.5);
     const draw = (t) => {
       fill.clear();
       if (t > 0) {
         fill.fillStyle(0xffa64d, 0.85);
-        fill.slice(x, y, r - 4, -Math.PI / 2, -Math.PI / 2 + t * Math.PI * 2);
+        fill.slice(x, y, r - 3, -Math.PI / 2, -Math.PI / 2 + t * Math.PI * 2);
         fill.fillPath();
       }
       needle.setRotation(t * Math.PI * 2);
@@ -144,30 +124,6 @@ export class KitchenScene extends RestaurantScene {
         onUpdate: () => draw(progress.t),
       });
     } else draw(order?.status === "READY_TO_DELIVER" ? 1 : 0);
-    if (!ready) return;
-    const finger = this.add
-      .text(x, y + half + 30, "👆", { fontSize: "34px" })
-      .setOrigin(0.5);
-    this.tweens.add({
-      targets: finger,
-      y: finger.y - 10,
-      duration: 380,
-      ease: "Sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
-    const press = this.add
-      .zone(x, y, half * 2 + 16, half * 2 + 16)
-      .setInteractive({ useHandCursor: true });
-    this.timerTarget = press;
-    press.on("pointerdown", () => {
-      this.audio.unlock();
-      this.audio.play("tap");
-      press.disableInteractive();
-      this.act("COOK").then(
-        (ok) => !ok && press.scene && press.setInteractive(),
-      );
-    });
   }
   // The order ticket lists the recipe, ticking off what is on the pizza.
   ticket(order) {
@@ -191,7 +147,8 @@ export class KitchenScene extends RestaurantScene {
     // A sad sticker when the customer has waited too long.
     if (this.patience(order)) {
       const sticker = this.add
-        .text(-40, -8, "😢", { fontSize: "34px" })
+        // Just below the ticket, clear of the sign at the top.
+        .text(0, 182, "😟", { fontSize: "40px" })
         .setOrigin(0.5);
       c.add(sticker);
       this.tweens.add({
@@ -239,7 +196,7 @@ export class KitchenScene extends RestaurantScene {
       },
     );
   }
-  tray(order, { canPrepare, preparing, next, target, outline }) {
+  tray(order, { canPrepare, preparing, next, target }) {
     const pages = Math.ceil(TRAY_IDS.length / TRAY.perPage);
     // Open on the page holding the next ingredient whenever it changes.
     if (next !== this.trayNext) {
@@ -295,8 +252,14 @@ export class KitchenScene extends RestaurantScene {
       });
       dragToTarget(this, item, {
         target,
+        // No ring around the pizza: it grows a little while an ingredient is over it.
         highlight: (over) =>
-          outline.setStrokeStyle(over ? 6 : 4, over ? 0x7fbd94 : 0xffd77f, 1),
+          this.prepDish?.scene &&
+          this.tweens.add({
+            targets: this.prepDish,
+            scale: over ? PREP.scale * 1.08 : PREP.scale,
+            duration: 120,
+          }),
         // Capture this order's id now, not whichever order is current when a
         // delayed pointer event arrives.
         onDrop: () =>
@@ -346,14 +309,13 @@ export class KitchenScene extends RestaurantScene {
       ORDER_SENT: "Drag the glowing ingredient to the pizza!",
       PREPARING: next
         ? "Drag the glowing ingredient to the pizza!"
-        : "🔥 Tap the oven timer to bake!",
+        : "🔥 Drag the pizza into the oven!",
       COOKING: "🔥 Baking… watch the timer!",
       READY_TO_DELIVER: "✨ Tap the pizza to send it!",
       DELIVERED: "🛎️ Your friend is serving!",
       COMPLETE: "🎉 Great teamwork! +3 ⭐ +5 🪙",
     };
     this.plaque(270, 152, hints[status], 21);
-    if (this.timerTarget?.scene) this.guideTarget = this.timerTarget;
     // The pizza is in the oven while cooking, and gone once it has been sent.
     const empty = ["COOKING", "DELIVERED", "COMPLETE"].includes(status);
     this.prepDish = pizza(
@@ -363,20 +325,45 @@ export class KitchenScene extends RestaurantScene {
       empty ? [] : order.addedIngredients,
       PREP.scale,
     );
+    if (status === "PREPARING" && !next && online) this.readyForOven();
     if (status === "COOKING") this.ovenGlow();
     if (status === "READY_TO_DELIVER") this.servePizza(order, online);
     const canPrepare = online && preparing && Boolean(next);
-    let target, outline;
+    let target;
     if (canPrepare) {
-      outline = this.add
-        .ellipse(PREP.x, PREP.y, 270, 160)
-        .setStrokeStyle(4, 0xffd77f, 0.9);
-      pulse(this, outline);
       target = this.add
         .zone(PREP.x, PREP.y, 380, 150)
         .setRectangleDropZone(380, 150);
     }
-    this.tray(order, { canPrepare, preparing, next, target, outline });
+    this.tray(order, { canPrepare, preparing, next, target });
+  }
+  // Every ingredient is on: the pizza glows and the oven window shows a soft preheat
+  // light. Dragging the pizza into the oven bakes it and starts the timer.
+  readyForOven() {
+    const dish = this.prepDish;
+    const preheat = this.add
+      .rectangle(OVEN.x, OVEN.y, 92, 34, 0xff9a3c, 0.35)
+      .setStrokeStyle(3, INK);
+    this.tweens.add({
+      targets: preheat,
+      alpha: 0.6,
+      duration: 700,
+      yoyo: true,
+      repeat: -1,
+    });
+    const target = this.add
+      .zone(OVEN.x, OVEN.y, 180, 130)
+      .setRectangleDropZone(180, 130);
+    pulse(this, dish);
+    this.guideTarget = dish;
+    dish.setSize(212, 212);
+    dragToTarget(this, dish, {
+      target,
+      // The oven window brightens while the pizza is over it.
+      highlight: (over) => preheat.setFillStyle(0xff9a3c, over ? 1 : 0.35),
+      onDrop: () => this.act("COOK"),
+      missHint: "Drag the pizza into the oven!",
+    });
   }
   // A warm, flickering glow in the oven door's window while the pizza bakes.
   ovenGlow() {
@@ -424,22 +411,20 @@ export class KitchenScene extends RestaurantScene {
   }
   effect(event) {
     super.effect(event);
-    // Into the oven: the pizza slides from the counter into the oven's window.
+    // Into the oven: the dropped pizza shrinks away through the oven door.
     if (event.type === "COOK") {
       const dish = pizza(
         this,
-        PREP.x,
-        PREP.y,
+        OVEN.x,
+        OVEN.y,
         this.game.registry.get("snapshot").game.order.addedIngredients,
         PREP.scale,
       );
       this.tweens.add({
         targets: dish,
-        x: OVEN.x,
-        y: OVEN.y,
-        scale: 0.2,
+        scale: 0.15,
         alpha: 0,
-        duration: 500,
+        duration: 300,
         ease: "Sine.in",
         onComplete: () => dish.destroy(),
       });
