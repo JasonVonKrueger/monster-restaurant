@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400" width="2000" height="400">
-  <!-- Bubbles sprite sheet: 5 frames of 400x400, transparent background.
-       Frame order: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy. Parts live in <defs>. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 400" width="2400" height="400">
+  <!-- Bubbles sprite sheet: 6 frames of 400x400, transparent background.
+       Frame order: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad. Parts live in <defs>. -->
   <defs>
     <g id="back">
       <!-- feet -->
@@ -73,6 +73,15 @@
       <path d="M314 240 C342 222 352 196 348 168" fill="none" stroke="#a56cf0" stroke-width="16"/>
       <circle cx="348" cy="162" r="15" fill="#a56cf0"/>
     </g>
+    <g id="eyes-sad">
+      <ellipse cx="158" cy="198" rx="40" ry="46" fill="#ffffff"/>
+      <ellipse cx="242" cy="198" rx="40" ry="46" fill="#ffffff"/>
+      <circle cx="162" cy="220" r="17" fill="#2b1d3a" stroke="none"/>
+      <circle cx="238" cy="220" r="17" fill="#2b1d3a" stroke="none"/>
+      <path d="M124 146 L182 132 M218 132 L276 146" fill="none" stroke-width="6"/>
+      <path d="M122 236 C116 246 116 254 122 256 C128 254 128 246 122 236 Z" fill="#8fd3ff" stroke-width="2.5"/>
+    </g>
+    <g id="mouth-frown"><path d="M176 290 Q200 266 224 290" fill="none" stroke-width="6"/></g>
   </defs>
 
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
@@ -96,5 +105,6 @@
       <use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/>
       <use href="#arm-left-up"/><use href="#arm-right-up"/>
     </g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
   </g>
 </svg>

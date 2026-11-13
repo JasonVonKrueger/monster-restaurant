@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400" width="2000" height="400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 400" width="2400" height="400">
   <!-- Gloop: a teal slime drop with eyes on stalks.
-       5 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy. -->
+       6 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad. -->
   <defs>
     <g id="back">
       <!-- eye stalks: ink tube under a slime tube -->
@@ -66,6 +66,15 @@
       <path d="M310 246 C338 228 348 202 344 174" fill="none" stroke="#4fd1c5" stroke-width="16"/>
       <circle cx="344" cy="168" r="15" fill="#4fd1c5"/>
     </g>
+    <g id="eyes-sad">
+      <circle cx="148" cy="84" r="30" fill="#ffffff"/>
+      <circle cx="252" cy="84" r="30" fill="#ffffff"/>
+      <circle cx="149" cy="100" r="12" fill="#2b1d3a" stroke="none"/>
+      <circle cx="251" cy="100" r="12" fill="#2b1d3a" stroke="none"/>
+      <path d="M118 48 L170 36 M230 36 L282 48" fill="none" stroke-width="6"/>
+      <path d="M116 112 C110 122 110 130 116 132 C122 130 122 122 116 112 Z" fill="#8fd3ff" stroke-width="2.5"/>
+    </g>
+    <g id="mouth-frown"><path d="M176 276 Q200 252 224 276" fill="none" stroke-width="6"/></g>
   </defs>
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
     <g><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
@@ -73,5 +82,6 @@
     <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
     <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
     <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
   </g>
 </svg>

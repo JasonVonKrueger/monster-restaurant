@@ -177,3 +177,27 @@ test("the monster reads the menu on the server clock before the order can be sen
   act(dining, "SEND_ORDER");
   assert.equal(room.game.order.status, "ORDER_SENT");
 });
+
+test("the monster's waiting clock restarts on every step, but not on hugs or bounces", () => {
+  const { room, dining, kitchen, act, advance } = setup();
+  act(dining, "START");
+  const arrived = room.game.order.waitingSince;
+  advance(5000);
+  act(dining, "HUG");
+  act(kitchen, "BOUNCE");
+  assert.equal(room.game.order.waitingSince, arrived);
+  act(dining, "WELCOME");
+  assert.equal(room.game.order.waitingSince, arrived + 5000);
+  act(dining, "GIVE_MENU");
+  advance(MENU_READ_MS);
+  assert.equal(room.game.order.status, "READY_TO_ORDER");
+  const read = room.game.order.waitingSince;
+  assert.equal(read, arrived + 5000 + MENU_READ_MS);
+  advance(40000);
+  act(dining, "SEND_ORDER");
+  act(kitchen, "ADD_INGREDIENT", { ingredientId: "dough" });
+  assert.equal(room.game.order.waitingSince, read + 40000);
+  assert.throws(() => act(kitchen, "ADD_INGREDIENT", { ingredientId: "fish" }));
+  assert.equal(room.game.order.waitingSince, read + 40000);
+  assert.equal(room.game.stars, 0);
+});

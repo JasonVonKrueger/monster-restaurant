@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400" width="2000" height="400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 400" width="2400" height="400">
   <!-- Puff: a fluffy yellow cloud monster with tiny pink wings.
-       5 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy. -->
+       6 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad. -->
   <defs>
     <!-- the fluffy outline: draw the circles with a thick ink stroke, then again without,
          so only the outer edge of the stroke shows -->
@@ -73,6 +73,15 @@
       <path d="M342 268 C364 250 370 226 366 200" fill="none" stroke="#ffe066" stroke-width="16"/>
       <circle cx="366" cy="194" r="15" fill="#ffe066"/>
     </g>
+    <g id="eyes-sad">
+      <ellipse cx="166" cy="206" rx="30" ry="36" fill="#ffffff"/>
+      <ellipse cx="234" cy="206" rx="30" ry="36" fill="#ffffff"/>
+      <circle cx="168" cy="224" r="13" fill="#2b1d3a" stroke="none"/>
+      <circle cx="232" cy="224" r="13" fill="#2b1d3a" stroke="none"/>
+      <path d="M134 162 L188 148 M212 148 L266 162" fill="none" stroke-width="6"/>
+      <path d="M136 240 C130 250 130 258 136 260 C142 258 142 250 136 240 Z" fill="#8fd3ff" stroke-width="2.5"/>
+    </g>
+    <g id="mouth-frown"><path d="M180 292 Q200 270 220 292" fill="none" stroke-width="6"/></g>
   </defs>
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
     <g><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
@@ -80,5 +89,6 @@
     <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
     <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
     <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
   </g>
 </svg>

@@ -1,7 +1,7 @@
 import { blink } from "../animations/blink.js";
 import { animateSheet } from "./poses.js";
 
-// Every monster sheet has the same frames: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy.
+// Every monster sheet has the same frames: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad.
 const MONSTER_POSES = {
   wave: [
     [2, 220],
@@ -21,11 +21,12 @@ const MONSTER_POSES = {
   ],
 };
 
-// A monster customer, centred on (x, y). The container gets pose(name); it does
-// nothing on the older single-image and procedural Bubbles fallbacks.
+// A monster customer, centred on (x, y). The container gets pose(name) and
+// setSad(sad); they do nothing on the older single-image and procedural fallbacks.
 export function monster(scene, x, y, scale = 1, id = "bubbles") {
   const c = scene.add.container(x, y).setScale(scale);
   c.pose = () => {};
+  c.setSad = () => {};
   const sheet = [`${id}-sheet`, "bubbles-sheet"].find((key) =>
     scene.textures.exists(key),
   );
@@ -34,6 +35,7 @@ export function monster(scene, x, y, scale = 1, id = "bubbles") {
     c.add(sprite);
     animateSheet(scene, sprite, MONSTER_POSES);
     c.pose = (name) => sprite.pose(name);
+    c.setSad = (sad) => sprite.setRest(sad ? 5 : 0);
     return c;
   }
   if (scene.textures.exists("bubbles")) {

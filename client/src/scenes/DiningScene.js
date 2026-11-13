@@ -48,6 +48,8 @@ export class DiningScene extends RestaurantScene {
       0.9,
       order?.monsterId,
     );
+    this.sad = this.patience(order);
+    this.guest.setSad(this.sad);
     if (arriving)
       this.tweens.add({
         targets: this.guest,
@@ -119,18 +121,22 @@ export class DiningScene extends RestaurantScene {
     // Hand the menu over: drag it onto the monster.
     pulse(this, card);
     this.guideTarget = card;
-    const outline = this.add
-      .ellipse(270, 330, 290, 300)
-      .setStrokeStyle(4, 0xffd77f, 0.9);
-    pulse(this, outline);
     const target = this.add
       .zone(270, 330, 280, 290)
       .setRectangleDropZone(280, 290);
     const orderId = order.id;
+    // No outline: the monster grows a little when the menu is over it.
+    const guest = this.guest,
+      baseScale = guest?.scaleX;
     dragToTarget(this, card, {
       target,
       highlight: (over) =>
-        outline.setStrokeStyle(over ? 6 : 4, over ? 0x7fbd94 : 0xffd77f, 1),
+        guest?.scene &&
+        this.tweens.add({
+          targets: guest,
+          scale: over ? baseScale * 1.08 : baseScale,
+          duration: 120,
+        }),
       onDrop: () => this.act("GIVE_MENU", { orderId }),
       missHint: `Drag the menu to ${name}!`,
     });
@@ -209,7 +215,11 @@ export class DiningScene extends RestaurantScene {
         "NEXT_CUSTOMER",
       ],
     }[status];
-    this.plaque(270, 152, copy[0], 22);
+    // A hungry monster says so, unless the sign is telling the child what to do.
+    const waitingOnly = !copy[2] && status !== "CUSTOMER_SEATED";
+    const sign =
+      this.sad && waitingOnly ? `😢 ${name} is getting hungry…` : copy[0];
+    this.plaque(270, 152, sign, 22);
     if (copy[2])
       this.button(270, BUTTON_Y, 450, copy[1], () => this.act(copy[2]), {
         active: online,

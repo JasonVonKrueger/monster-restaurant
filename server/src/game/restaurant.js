@@ -34,6 +34,8 @@ export function newOrder(now, previousMonsterId) {
     addedIngredients: [],
     status: "CUSTOMER_ARRIVED",
     createdAt: now,
+    // When the order last moved forward; clients show a sad monster after PATIENCE_MS.
+    waitingSince: now,
     readEndsAt: null,
     cookEndsAt: null,
   };
@@ -125,10 +127,11 @@ export function applyGameAction(room, player, { type, payload = {} }, now) {
     case "NEXT_CUSTOMER":
       status(["COMPLETE"]);
       room.game.order = newOrder(now, order.monsterId);
-      break;
+      return;
     default:
       throw new Error("Choose an action in your restaurant.");
   }
+  order.waitingSince = now;
 }
 // Steps that finish on the server clock: reading the menu and cooking.
 // Returns true when the order changed.
@@ -136,10 +139,12 @@ export function advanceTimers(room, now) {
   const order = room.game?.order;
   if (order?.status === "READING_MENU" && now >= order.readEndsAt) {
     order.status = "READY_TO_ORDER";
+    order.waitingSince = now;
     return true;
   }
   if (order?.status === "COOKING" && now >= order.cookEndsAt) {
     order.status = "READY_TO_DELIVER";
+    order.waitingSince = now;
     return true;
   }
   return false;

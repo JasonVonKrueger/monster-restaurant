@@ -5,6 +5,7 @@ export const INGREDIENTS = Object.freeze({
   strawberry: { icon: "🍓", label: "Strawberry", color: 0xf58b9f },
   lemon: { icon: "🍋", label: "Lemon", color: 0xfff176 },
   cookie: { icon: "🍪", label: "Cookie", color: 0xc68a4e },
+  fish: { icon: "🐟", label: "Fish", color: 0x7fb8e6 },
 });
 export const PIZZA = Object.freeze({
   id: "strawberry-pizza",

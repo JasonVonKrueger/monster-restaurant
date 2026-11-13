@@ -12,7 +12,7 @@ export function guidanceFor(snapshot, role) {
       const next = order.requiredIngredients[order.addedIngredients.length];
       return next
         ? `Drag the ${INGREDIENTS[next].label.toLowerCase()} onto the pizza!`
-        : "Tap the oven. Let’s bake your pizza!";
+        : "Tap the oven timer to bake your pizza!";
     }
     return {
       CUSTOMER_ARRIVED: `Your friend is welcoming ${name}. Tap Pip the chef for a giggle!`,
@@ -20,7 +20,8 @@ export function guidanceFor(snapshot, role) {
       READING_MENU: `${name} is reading the menu. What will it be?`,
       READY_TO_ORDER: `${name} wants a pizza! Here comes your order.`,
       COOKING: "Your pizza is cooking. A little oven magic!",
-      READY_TO_DELIVER: "Your pizza is ready! Send it to your friend!",
+      READY_TO_DELIVER:
+        "Your pizza is ready! Tap it to send it to your friend!",
       DELIVERED: "Your friend is serving the pizza. Great helping!",
       COMPLETE: `Great teamwork! ${name} loved your pizza!`,
     }[order.status];

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 400" width="2000" height="400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 400" width="2400" height="400">
   <!-- Mo: a tall green one-eyed monster with a leaf sprout.
-       5 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy. -->
+       6 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad. -->
   <defs>
     <g id="back">
       <ellipse cx="160" cy="354" rx="36" ry="17" fill="#5fb34d"/>
@@ -55,6 +55,13 @@
       <path d="M288 240 C316 222 326 196 322 168" fill="none" stroke="#7ed36a" stroke-width="16"/>
       <circle cx="322" cy="162" r="15" fill="#7ed36a"/>
     </g>
+    <g id="eyes-sad">
+      <ellipse cx="200" cy="176" rx="52" ry="56" fill="#ffffff"/>
+      <circle cx="203" cy="202" r="21" fill="#2b1d3a" stroke="none"/>
+      <path d="M150 114 L200 98 L250 114" fill="none" stroke-width="6"/>
+      <path d="M150 214 C144 224 144 232 150 234 C156 232 156 224 150 214 Z" fill="#8fd3ff" stroke-width="2.5"/>
+    </g>
+    <g id="mouth-frown"><path d="M176 290 Q200 266 224 290" fill="none" stroke-width="6"/></g>
   </defs>
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
     <g><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
@@ -62,5 +69,6 @@
     <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
     <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
     <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
   </g>
 </svg>

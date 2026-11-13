@@ -48,23 +48,10 @@ function render(next) {
   $("welcome").hidden = true;
   $("play").hidden = false;
   $("play").classList.toggle("in-game", Boolean(state.game));
+  // Showing or hiding the room code changes the space left for the game.
+  game?.scale.getParentBounds();
+  game?.scale.refresh();
   $("code").textContent = state.code;
-  $("players").replaceChildren(
-    ...state.players.map((p) => {
-      const card = document.createElement("div");
-      card.className = "player";
-      const name = document.createElement("strong");
-      name.textContent = (p.role === "dining" ? "🛎️ " : "👨‍🍳 ") + p.name;
-      const status = document.createElement("span");
-      status.className = p.connected ? "online" : "offline";
-      status.textContent =
-        (p.connected ? "● Here" : "○ Coming back") +
-        " · " +
-        (p.role === "dining" ? "Dining" : "Kitchen");
-      card.append(name, status);
-      return card;
-    }),
-  );
   $("connection").textContent = !socket.connected
     ? "Finding your friends…"
     : state.players.length < 2

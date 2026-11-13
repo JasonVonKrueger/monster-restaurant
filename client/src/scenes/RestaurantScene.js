@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import { monster, pizza } from "../entities/art.js";
 import { preloadAssets } from "../data/assets.js";
 import { guidanceFor } from "../data/guidance.js";
+import { msUntilSad } from "../data/patience.js";
+import { monsterName } from "../../../shared/monsters.js";
 import { backdrop } from "../entities/backdrop.js";
 import { pulse, wiggle, burst, reaction } from "../animations/effects.js";
 export const INK = 0x2b1d3a;
@@ -98,6 +100,19 @@ export class RestaurantScene extends Phaser.Scene {
     g.lineStyle(3, INK);
     g.strokeRoundedRect(-w / 2, -h / 2, w, h, h / 2);
     return this.add.container(x, y, [g, t]);
+  }
+  // True when the visiting monster has waited too long. Otherwise schedules a redraw
+  // for the moment it gets sad, and says so once. Progress redraws the scene with a
+  // fresh waiting clock, which cheers the monster up again.
+  patience(order) {
+    const ms = msUntilSad(order);
+    if (ms === null) return false;
+    if (ms === 0) return true;
+    this.time.delayedCall(ms, () => {
+      this.audio.speak(`${monsterName(order.monsterId)} is getting hungry!`);
+      this.paint();
+    });
+    return false;
   }
   drawBackdrop() {
     backdrop(this, this.role);

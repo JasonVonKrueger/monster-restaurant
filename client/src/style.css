@@ -171,29 +171,6 @@ header button {
 #code {
   letter-spacing: 3px;
 }
-#players {
-  display: flex;
-  gap: 8px;
-}
-.player {
-  flex: 1;
-  border: 2px solid #e2d4e9;
-  border-radius: 16px;
-  background: #fffaf0;
-  padding: 12px;
-  font-size: 13px;
-  line-height: 1.8;
-}
-.player strong {
-  display: block;
-  font-size: 16px;
-}
-.online {
-  color: #41886a;
-}
-.offline {
-  color: #a77c58;
-}
 #connection {
   font-size: 13px;
   text-align: center;
@@ -202,8 +179,6 @@ header button {
 }
 #game {
   width: 100%;
-  aspect-ratio: 540/800;
-  margin-bottom: 16px;
 }
 #game canvas {
   touch-action: none;
@@ -217,21 +192,32 @@ header button {
   display: none !important;
 }
 
-/* Leave room for large game taps while keeping the parent controls compact. */
+/* Play screen: portrait phones and tablets. The page is exactly the screen's
+   height; the compact parent bar sits on top and the game takes all the space
+   left, scaled to fit by Phaser. Nothing scrolls, zooms or bounces. */
+body:has(#play:not([hidden])) {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
 body:has(#play:not([hidden])) #app {
-  padding-top: max(12px, env(safe-area-inset-top));
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  max-width: 960px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: max(8px, env(safe-area-inset-top))
+    max(10px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+    max(10px, env(safe-area-inset-left));
+}
+#play:not([hidden]) {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 #play header,
 #play .room-info {
   margin-bottom: 8px;
-}
-#play .player {
-  padding: 6px 10px;
-  font-size: 12px;
-}
-#play .player strong {
-  font-size: 14px;
 }
 #play #connection {
   font-size: 12px;
@@ -241,21 +227,80 @@ body:has(#play:not([hidden])) #app {
   display: none;
 }
 #play #game {
-  max-height: calc(100dvh - 245px);
-  margin-bottom: 0;
+  flex: 1;
+  min-height: 0;
 }
 #play.in-game .room-info {
   display: none;
 }
-#play.in-game #game {
-  max-height: calc(100dvh - 180px);
+#message:not(:empty) {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Small phones: tighten the welcome screen so it fits without scrolling. */
+@media (max-height: 720px) {
+  #app {
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+  .eyebrow {
+    margin-top: 0;
+  }
+  .mascot {
+    margin-top: 8px;
+  }
+  .mascot img {
+    width: 84px;
+    height: 84px;
+  }
+  h1 {
+    margin: 4px 0 12px;
+  }
+  form {
+    padding: 16px;
+  }
+  fieldset {
+    margin-bottom: 14px;
+  }
+  .settings-link {
+    margin-top: 8px;
+  }
+  .footnote {
+    display: none;
+  }
+}
+
+/* The game is made for portrait. A phone held sideways gets a friendly nudge. */
+#rotate {
+  display: none;
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  #rotate {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #fff4dc;
+    color: #7a51ae;
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+  }
+  #rotate span {
+    font-size: 56px;
+  }
 }
 #connection:empty,
 #message:empty {
   display: none;
 }
 .mascot img {
-  /* Frame 0 of Bubbles' five-frame sprite sheet. */
+  /* Frame 0 of Bubbles' sprite sheet. */
   width: 118px;
   height: 118px;
   object-fit: cover;
