@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" width="400" height="150">
   <!-- The dining room menu: 2 frames of 200x150, transparent background.
-       Frame 0: closed, standing on the counter. Frame 1: open, held up for reading. -->
+       Frame 0: closed, standing on the counter. Frame 1: open and held up, seen from the outside (we face the reader). -->
   <defs>
     <path id="heart" d="M0 6 C-7 1 -8 -3 -5 -5.5 C-2.5 -7 0 -5 0 -3 C0 -5 2.5 -7 5 -5.5 C8 -3 7 1 0 6 Z" fill="#ff3d6e" stroke="#2b1d3a" stroke-width="1.6"/>
     <g id="pizza">
@@ -19,18 +19,17 @@
   </g>
   <use href="#pizza" transform="translate(100 60) scale(1.1)"/>
 
-  <!-- frame 1: open menu -->
+  <!-- frame 1: the open menu seen from across the counter. The monster reads the inside,
+       so we see the outside: back cover on our left, front cover (with the pizza) on our
+       right, the spine between them, and the page edges peeking out at the top. -->
   <g transform="translate(200 0)" stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M6 26 Q53 10 100 28 Q147 10 194 26 V144 Q147 130 100 146 Q53 130 6 144 Z" fill="#9b8bd8"/>
-    <path d="M14 22 Q57 10 100 24 V136 Q57 124 14 134 Z" fill="#fff7dc" stroke-width="3"/>
-    <path d="M100 24 Q143 10 186 22 V134 Q143 124 100 136 Z" fill="#fff7dc" stroke-width="3"/>
-    <path d="M32 100 H82 M36 114 H78" stroke="#c9bde0" stroke-width="5"/>
-    <!-- right page: a strawberry, a star and a few lines -->
-    <path d="M128 40 C120 40 116 50 120 60 C124 70 132 74 134 74 C136 74 144 70 148 60 C152 50 148 40 140 40 C137 40 135 42 134 44 C133 42 131 40 128 40 Z" fill="#ff3d6e" stroke-width="3"/>
-    <path d="M126 40 L134 34 L142 40" fill="#7fc97f" stroke-width="3"/>
-    <circle cx="128" cy="54" r="1.6" fill="#fff6c8" stroke="none"/><circle cx="140" cy="54" r="1.6" fill="#fff6c8" stroke="none"/><circle cx="134" cy="63" r="1.6" fill="#fff6c8" stroke="none"/>
-    <path d="M166 44 L169 52 L177 52 L171 57 L173 65 L166 60 L159 65 L161 57 L155 52 L163 52 Z" fill="#ffd84d" stroke-width="2.5"/>
-    <path d="M118 96 H170 M122 110 H166 M126 122 H162" stroke="#c9bde0" stroke-width="5"/>
+    <path d="M14 30 Q57 18 98 30 V140 Q57 130 14 140 Z" fill="#fff7dc" stroke-width="3"/>
+    <path d="M102 30 Q143 18 186 30 V140 Q143 130 102 140 Z" fill="#fff7dc" stroke-width="3"/>
+    <path d="M6 36 Q53 24 96 36 V146 Q53 136 6 146 Z" fill="#8a79cc"/>
+    <path d="M104 36 Q147 24 194 36 V146 Q147 136 104 146 Z" fill="#9b8bd8"/>
+    <rect x="92" y="32" width="16" height="116" rx="6" fill="#6f5fb3"/>
+    <path d="M24 120 Q52 112 80 120" fill="none" stroke="#b6a9e6" stroke-width="5"/>
+    <path d="M122 124 H176" stroke="#fff7dc" stroke-width="5"/>
   </g>
-  <use href="#pizza" transform="translate(257 60) scale(1.15)"/>
+  <use href="#pizza" transform="translate(349 82) scale(1.05)"/>
 </svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5600 400" width="5600" height="400">
+  <!-- Tok: a squat magenta monster with one striped horn and polka dots.
+       14 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad, 6 sad blink, 7 look left, 8 look right,
+       9 hold pizza (mouth open), 10 hold pizza (chewing), 11 hands only (drawn over the pizza),
+       12 drink, 13 drinking hand only (drawn over the glass). -->
+  <defs>
+    <g id="back">
+      <ellipse cx="158" cy="354" rx="36" ry="16" fill="#c94f9c"/>
+      <ellipse cx="242" cy="354" rx="36" ry="16" fill="#c94f9c"/>
+      <path d="M180 170 L200 94 L220 170 Z" fill="#ffd77f"/>
+      <path d="M190 132 L210 126 M186 150 L214 142" fill="none" stroke-width="3"/>
+      <path d="M100 330 C86 250 116 162 200 162 C284 162 314 250 300 330 C268 364 132 364 100 330 Z" fill="#e86bb8"/>
+      <g fill="#f7a6d7" stroke="none"><circle cx="134" cy="226" r="11"/><circle cx="272" cy="214" r="8"/><circle cx="282" cy="300" r="12"/><circle cx="126" cy="304" r="7"/><circle cx="206" cy="182" r="6"/></g>
+      <ellipse cx="146" cy="276" rx="15" ry="9" fill="#ff9fb8" stroke="none"/>
+      <ellipse cx="254" cy="276" rx="15" ry="9" fill="#ff9fb8" stroke="none"/></g>
+    <g id="eyes-open"><ellipse cx="166" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="170" cy="232" r="13" fill="#2b1d3a" stroke="none"/><circle cx="175" cy="226" r="4.5" fill="#ffffff" stroke="none"/><ellipse cx="234" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="238" cy="232" r="13" fill="#2b1d3a" stroke="none"/><circle cx="243" cy="226" r="4.5" fill="#ffffff" stroke="none"/></g>
+    <g id="eyes-closed"><path d="M144 230 Q166 244 188 230" fill="none" stroke-width="6"/><path d="M212 230 Q234 244 256 230" fill="none" stroke-width="6"/></g>
+    <g id="eyes-happy"><path d="M146 236 Q166 212 186 236" fill="none" stroke-width="6"/><path d="M214 236 Q234 212 254 236" fill="none" stroke-width="6"/></g>
+    <g id="eyes-sad"><ellipse cx="166" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="168" cy="238" r="11" fill="#2b1d3a" stroke="none"/><ellipse cx="234" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="236" cy="238" r="11" fill="#2b1d3a" stroke="none"/></g>
+    <g id="brows-sad"><path d="M142 196 L184 184 M258 196 L216 184" fill="none" stroke-width="6"/></g>
+    <g id="mouth-smile"><path d="M176 268 Q200 302 224 268 Q200 277 176 268 Z" fill="#6b1f4f"/><path d="M188 284 Q200 277 212 284 Q200 294 188 284 Z" fill="#ff7aa8" stroke="none"/></g>
+    <g id="mouth-chomp"><ellipse cx="200" cy="282" rx="28" ry="25" fill="#6b1f4f"/><ellipse cx="200" cy="296" rx="15" ry="8" fill="#ff7aa8" stroke="none"/></g>
+    <g id="mouth-grin"><path d="M164 264 Q200 320 236 264 Q200 276 164 264 Z" fill="#6b1f4f"/><path d="M182 292 Q200 280 218 292 Q200 308 182 292 Z" fill="#ff7aa8" stroke="none"/></g>
+    <g id="mouth-frown"><path d="M182 290 Q200 272 218 290" fill="none" stroke-width="6"/></g>
+    <g id="arm-left-down"><path d="M104 280 C80 292 70 312 74 332" fill="none" stroke-width="24"/><path d="M104 280 C80 292 70 312 74 332" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="74" cy="336" r="15" fill="#e86bb8"/></g>
+    <g id="arm-right-down"><path d="M296 280 C320 292 330 312 326 332" fill="none" stroke-width="24"/><path d="M296 280 C320 292 330 312 326 332" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="326" cy="336" r="15" fill="#e86bb8"/></g>
+    <g id="arm-left-up"><path d="M104 280 C76 262 66 236 70 208" fill="none" stroke-width="24"/><path d="M104 280 C76 262 66 236 70 208" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="70" cy="202" r="15" fill="#e86bb8"/></g>
+    <g id="arm-right-up"><path d="M296 280 C324 262 334 236 330 208" fill="none" stroke-width="24"/><path d="M296 280 C324 262 334 236 330 208" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="330" cy="202" r="15" fill="#e86bb8"/></g>
+    <g id="eyes-look-left"><ellipse cx="166" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="160" cy="232" r="13" fill="#2b1d3a" stroke="none"/><circle cx="165" cy="226" r="4.5" fill="#ffffff" stroke="none"/><ellipse cx="234" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="228" cy="232" r="13" fill="#2b1d3a" stroke="none"/><circle cx="233" cy="226" r="4.5" fill="#ffffff" stroke="none"/></g>
+    <g id="eyes-look-right"><ellipse cx="166" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="180" cy="232" r="13" fill="#2b1d3a" stroke="none"/><circle cx="185" cy="226" r="4.5" fill="#ffffff" stroke="none"/><ellipse cx="234" cy="226" rx="26" ry="26" fill="#ffffff"/><circle cx="248" cy="232" r="13" fill="#2b1d3a" stroke="none"/><circle cx="253" cy="226" r="4.5" fill="#ffffff" stroke="none"/></g>
+    <!-- holding: arms reach in to hold the pizza (or glass) at the mouth. The game
+         draws the pizza/glass over the body, then a hands-only frame over that. -->
+    <g id="arm-left-hold"><path d="M104 280 C108 320 125 335 146 307" fill="none" stroke-width="24"/><path d="M104 280 C108 320 125 335 146 307" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="146" cy="307" r="15" fill="#e86bb8"/></g>
+    <g id="arm-right-hold"><path d="M296 280 C292 320 275 335 254 307" fill="none" stroke-width="24"/><path d="M296 280 C292 320 275 335 254 307" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="254" cy="307" r="15" fill="#e86bb8"/></g>
+    <g id="hands-hold"><circle cx="146" cy="307" r="15" fill="#e86bb8"/><circle cx="254" cy="307" r="15" fill="#e86bb8"/></g>
+    <g id="arm-right-drink"><path d="M296 280 C291 320 271 350 246 322" fill="none" stroke-width="24"/><path d="M296 280 C291 320 271 350 246 322" fill="none" stroke="#e86bb8" stroke-width="16"/><circle cx="246" cy="322" r="15" fill="#e86bb8"/></g>
+    <g id="hand-drink"><circle cx="246" cy="322" r="15" fill="#e86bb8"/></g>
+  </defs>
+  <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <g transform="translate(0 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(800 0)"><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-up"/></g>
+    <g transform="translate(1200 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
+    <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2800 0)"><use href="#back"/><use href="#eyes-look-left"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(3200 0)"><use href="#back"/><use href="#eyes-look-right"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(3600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-hold"/><use href="#arm-right-hold"/></g>
+    <g transform="translate(4000 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-smile"/><use href="#arm-left-hold"/><use href="#arm-right-hold"/></g>
+    <g transform="translate(4400 0)"><use href="#hands-hold"/></g>
+    <g transform="translate(4800 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-drink"/></g>
+    <g transform="translate(5200 0)"><use href="#hand-drink"/></g>
+  </g>
+</svg>

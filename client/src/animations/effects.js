@@ -58,36 +58,3 @@ export function burst(
     });
   }
 }
-export function reaction(scene, target, variant = 0) {
-  if (!target) return;
-  const scale = target.scaleX;
-  if (variant === 0)
-    scene.tweens.add({
-      targets: target,
-      scaleX: scale * 1.24,
-      scaleY: scale * 1.2,
-      duration: 350,
-      yoyo: true,
-      repeat: 1,
-      ease: "Sine.inOut",
-    });
-  else if (variant === 1)
-    scene.tweens.add({
-      targets: target,
-      angle: 360,
-      duration: 900,
-      ease: "Back.out",
-      onComplete: () => target.setAngle(0),
-    });
-  else
-    scene.tweens.add({
-      targets: target,
-      angle: { from: -12, to: 12 },
-      scaleY: scale * 0.85,
-      duration: 150,
-      yoyo: true,
-      repeat: 4,
-      onComplete: () => target.setAngle(0).setScale(scale),
-    });
-  burst(scene, { kind: "confetti", count: 24 });
-}

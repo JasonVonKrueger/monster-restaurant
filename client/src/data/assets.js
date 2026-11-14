@@ -1,8 +1,7 @@
 // Replace files or change this manifest to swap artwork without touching gameplay.
 import { MONSTERS } from "../../../shared/monsters.js";
 // Sources for the rooms, the monsters and Pip live in artwork/svg; run `npm run art` to re-export.
-export const ASSETS = Object.freeze({
-  bubbles: { url: "/assets/monsters/bubbles/idle.png" },
+const ASSETS = Object.freeze({
   ...Object.fromEntries(
     MONSTERS.map(({ id }) => [
       `${id}-sheet`,
@@ -19,6 +18,10 @@ export const ASSETS = Object.freeze({
   menu: {
     url: "/assets/props/menu.png",
     frames: { frameWidth: 200, frameHeight: 150 },
+  },
+  rocket: {
+    url: "/assets/props/rocket.png",
+    frames: { frameWidth: 160, frameHeight: 80 },
   },
   "kitchen-back": { url: "/assets/backgrounds/kitchen-back.png" },
   "kitchen-front": { url: "/assets/backgrounds/kitchen-front.png" },

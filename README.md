@@ -1,6 +1,6 @@
 # 👾 Monsteraunt
 
-A cooperative restaurant for two little friends. **Phase 3** includes a complete two-player strawberry pizza loop: welcome Bubbles, send the order, add ingredients, cook, deliver, serve, and earn shared stars and coins. It now adds generated Bubbles artwork, illustrated rooms, animated reactions, original synthesized sounds, spoken guidance and shared hugs. More content and persistent progress are planned for later phases.
+A cooperative restaurant for two little friends. **Phase 3** includes a complete two-player pizza loop: welcome a hungry monster, send the order, add crust, sauce, cheese and the topping it asked for, cook, deliver, serve, and earn shared stars and coins. It has eight monster customers, illustrated rooms, animated reactions, original synthesized sounds, spoken guidance and shared hugs. More content and persistent progress are planned for later phases.
 
 ## Run locally
 
@@ -16,12 +16,12 @@ Open http://localhost:5173. Vite serves the client on port 5173 and proxies Sock
 ## Two players
 
 1. In tab one, choose Raelyn and Dining room, then Create Restaurant.
-2. Note the five-character restaurant code shown above the game.
+2. Note the four-character restaurant code shown above the game.
 3. Open a **fresh tab** at http://localhost:5173 (do not duplicate an existing tab, which can copy its session storage).
 4. Choose Cooper and Kitchen, enter the code and tap Join. Names and roles are independent; either child can choose either role.
 5. Once both players are connected, the dining player taps **Open restaurant**. Either player can bounce Bubbles while waiting in the lobby.
-6. Dining: tap the visiting monster or **Welcome**. Drag the glowing menu card from the counter onto the monster; it opens the menu, reads it for about three seconds (timed by the server, so a refresh does not interrupt it) and sets it back down. Then tap **Send order**. A missed drop returns the menu with a gentle hint. Each visit brings one of five monsters (Bubbles, Mo, Fizz, Gloop or Puff), never the same one twice in a row.
-7. Kitchen: drag each glowing ingredient onto the pizza: **dough → tomato sauce → cheese → strawberry**. The pizza changes after each server-approved drop. Tapping an ingredient does not add it; missed drops return to the tray. Lemons, chocolate chip cookies and fish give a gentle, funny hint and leave the pizza unchanged.
+6. Dining: tap the visiting monster or **Welcome**. Drag the glowing menu card from the counter onto the monster; it opens the menu, reads it for about three seconds (timed by the server, so a refresh does not interrupt it) and sets it back down. Then tap **Send order**. A missed drop returns the menu with a gentle hint. Each visit brings one of eight monsters (Bubbles, Mo, Fizz, Gloop, Puff, Zuzu, Tok or Wiggles), never the same one twice in a row.
+7. Kitchen: drag each glowing ingredient onto the pizza: **dough → tomato sauce → cheese**, then the topping this monster asked for (strawberry, lemon, cookie, fish, banana or grapes). The pizza changes after each server-approved drop. Tapping an ingredient does not add it; missed drops return to the tray. Lemons, chocolate chip cookies and fish give a gentle, funny hint and leave the pizza unchanged.
 8. Kitchen: when the last ingredient is on, the pizza glows and the oven window shows a soft preheat light. Drag the pizza into the oven: it bakes, the window glows and the wall timer's needle sweeps for about two seconds. The pizza then slides back onto the counter; tap it to send it to your friend. Cooking never burns or times out. The two-row ingredient tray holds twelve ingredients per page, with arrows when there are more.
 9. Dining: tap the delivered pizza or **Serve Bubbles**. Both screens receive **3 stars and 5 coins**. Tap **Next hungry visit** to repeat.
 10. While waiting, tap the visiting monster, pop bubbles, or tap Pip the chef in the kitchen for local effects. These do not change orders or rewards.
@@ -59,12 +59,12 @@ After building, `npm start` serves the built client and Socket.IO from port 3001
 ## Layout and decisions
 
 - `client/src/scenes`: separate dining and kitchen Phaser scenes with common scene controls.
-- `client/src/data/assets.js`: centralized image manifest and preload helper with a procedural character fallback.
-- `client/src/entities`: generated character integration, Pip the chef sprite (`chef.js`), layered pizza drawing and room illustrations.
+- `client/src/data/assets.js`: centralized image manifest and preload helper.
+- `client/src/entities`: monster and Pip sprites (`art.js`, `chef.js`), the pizza, toppings and glass of water.
 - `artwork/svg`: editable sources for Pip's sprite sheet and the back and front layers of both rooms. Run `npm run art` (headless Chrome; set `CHROME` if it is not in the macOS default location) to re-export the PNGs in `client/public/assets`.
-- `client/src/animations/effects.js`: reusable pulse, wiggle, curved flight, particles and monster reactions. Eye-only blinks run at gentle randomized intervals; monsters stay still while idle.
+- `client/src/animations/effects.js`: reusable pulse, wiggle and particle bursts. Monsters blink at gentle randomized intervals from their sprite sheets; they stay still while idle.
 - `client/src/managers`: original Web Audio effects, gesture activation, narration and parent audio settings.
-- `artwork/README.md`: generated artwork provenance and exact prompt.
+- `artwork/README.md`: where the artwork comes from and how to re-export it.
 - `client/src/networking`: same-origin Socket.IO connection and acknowledged requests.
 - `server/src/rooms.js`: authoritative membership, roles, deduplicated actions, reconnect expiry and sanitized snapshots.
 - `server/src/game/restaurant.js`: legal order transitions, ingredient validation, server-clock cooking, and fixed reward allocation.

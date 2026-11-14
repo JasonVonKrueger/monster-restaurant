@@ -1,6 +1,7 @@
 import { randomInt, randomUUID } from "node:crypto";
 import {
-  PIZZA,
+  TOPPINGS,
+  pizzaIngredients,
   INGREDIENTS,
   COOK_MS,
   MENU_READ_MS,
@@ -21,16 +22,17 @@ const requireThat = (condition, message) => {
   if (!condition) throw new Error(message);
 };
 // A random monster, never the same one twice in a row.
-export function nextMonster(previousId) {
+function nextMonster(previousId) {
   const choices = MONSTERS.filter((m) => m.id !== previousId);
   return choices[randomInt(choices.length)].id;
 }
 export function newOrder(now, previousMonsterId) {
+  const topping = TOPPINGS[randomInt(TOPPINGS.length)];
   return {
     id: randomUUID(),
     monsterId: nextMonster(previousMonsterId),
-    recipeId: PIZZA.id,
-    requiredIngredients: [...PIZZA.requiredIngredients],
+    topping,
+    requiredIngredients: pizzaIngredients(topping),
     addedIngredients: [],
     status: "CUSTOMER_ARRIVED",
     createdAt: now,

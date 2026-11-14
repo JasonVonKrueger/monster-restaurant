@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import { monster } from "./art.js";
 import { animateSheet } from "./poses.js";
 
 // Pip's sprite sheet frames: 0 idle, 1 blink, 2 wave, 3 happy.
@@ -15,17 +14,8 @@ const POSES = {
 };
 
 // Pip the chef, standing with feet at (x, y). The counter is drawn over the lower body.
-// Returns a sprite with pose(name); falls back to the procedural monster without art.
+// Returns a sprite with pose(name).
 export function chef(scene, x, y, { scale = 0.6, onTap } = {}) {
-  if (!scene.textures.exists("pip")) {
-    const fallback = monster(scene, x, y - 170, 0.8);
-    if (onTap)
-      fallback
-        .setSize(250, 270)
-        .setInteractive({ useHandCursor: true })
-        .on("pointerdown", onTap);
-    return fallback;
-  }
   const sprite = scene.add
     .sprite(x, y, "pip", 0)
     .setOrigin(0.5, 0.95)

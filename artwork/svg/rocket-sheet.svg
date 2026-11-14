@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 80" width="480" height="80">
+  <!-- Rocket sprite sheet: three 160 × 80 frames, pointing right. Only the exhaust flame
+       changes between frames, so playing them on a loop makes it flicker. It flies past
+       the dining-room window (DiningScene.rocket). -->
+  <defs>
+    <g id="rocket" stroke="#2b1d3a" stroke-width="3" stroke-linejoin="round">
+      <!-- back fins -->
+      <path d="M62 26 L44 8 L40 10 L52 32 Z" fill="#ff7fb0"/>
+      <path d="M62 54 L44 72 L40 70 L52 48 Z" fill="#ff7fb0"/>
+      <!-- body and nose cone -->
+      <path d="M46 28 H108 C126 28 142 34 150 40 C142 46 126 52 108 52 H46 Q40 40 46 28 Z" fill="#f4f0fb"/>
+      <path d="M118 29.5 C132 31 144 35 150 40 C144 45 132 49 118 50.5 Q122 40 118 29.5 Z" fill="#ff5d73"/>
+      <!-- stripe and porthole -->
+      <path d="M66 28 V52" stroke="#8fd8c8" stroke-width="6"/>
+      <circle cx="92" cy="40" r="8" fill="#b9e6ff"/>
+      <circle cx="89" cy="37" r="2.5" fill="#ffffff" stroke="none"/>
+      <!-- middle fin -->
+      <path d="M58 40 H76" stroke-width="5"/>
+      <!-- nozzle -->
+      <rect x="36" y="32" width="11" height="16" rx="3" fill="#b598dc"/>
+    </g>
+  </defs>
+
+  <!-- frame 0 -->
+  <g>
+    <path d="M36 32 C24 30 10 36 4 40 C10 44 24 50 36 48 Z" fill="#ffb347"/>
+    <path d="M36 35 C28 35 20 38 16 40 C20 42 28 45 36 45 Z" fill="#fff07a"/>
+    <use href="#rocket"/>
+  </g>
+  <!-- frame 1: a shorter flame -->
+  <g transform="translate(160 0)">
+    <path d="M36 33 C28 32 18 37 14 40 C18 43 28 48 36 47 Z" fill="#ffb347"/>
+    <path d="M36 36 C31 36 26 38 23 40 C26 42 31 44 36 44 Z" fill="#fff07a"/>
+    <use href="#rocket"/>
+  </g>
+  <!-- frame 2: a long, wavy flame -->
+  <g transform="translate(320 0)">
+    <path d="M36 31 C22 28 8 33 0 36 C6 40 2 44 0 45 C8 48 22 52 36 49 Z" fill="#ffb347"/>
+    <path d="M36 35 C26 34 16 38 10 40 C16 42 26 46 36 45 Z" fill="#fff07a"/>
+    <use href="#rocket"/>
+  </g>
+</svg>

@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { Rooms } from "../server/src/rooms.js";
-import { advanceTimers } from "../server/src/game/restaurant.js";
-import { COOK_MS, MENU_READ_MS, PIZZA } from "../shared/recipes.js";
+import { advanceTimers, newOrder } from "../server/src/game/restaurant.js";
+import { COOK_MS, MENU_READ_MS, TOPPINGS } from "../shared/recipes.js";
 import { MONSTERS } from "../shared/monsters.js";
 function setup() {
   let time = 1000,
@@ -32,7 +32,7 @@ function setup() {
   const prepare = () => {
     act(dining, "START");
     order();
-    for (const ingredientId of PIZZA.requiredIngredients)
+    for (const ingredientId of room.game.order.requiredIngredients)
       act(kitchen, "ADD_INGREDIENT", { ingredientId });
   };
   return {
@@ -122,6 +122,18 @@ test("disconnect during cooking does not prevent completion or duplicate rewards
   act(dining, "SERVE", {}, "serve");
   assert.equal(room.game.stars, 3);
 });
+test("every order is crust, sauce and cheese plus one topping", () => {
+  for (let i = 0; i < 40; i++) {
+    const order = newOrder(0);
+    assert.ok(TOPPINGS.includes(order.topping));
+    assert.deepEqual(order.requiredIngredients, [
+      "dough",
+      "sauce",
+      "cheese",
+      order.topping,
+    ]);
+  }
+});
 test("start waits for two connected players; malicious payloads cannot choose rewards", () => {
   const { room, rooms, dining, kitchen, act, advance, order } = setup();
   rooms.disconnect(room.code, kitchen.id, "k");
@@ -129,7 +141,7 @@ test("start waits for two connected players; malicious payloads cannot choose re
   rooms.resume({ code: room.code, token: kitchen.token }, "k2");
   act(dining, "START");
   order();
-  for (const ingredientId of PIZZA.requiredIngredients)
+  for (const ingredientId of room.game.order.requiredIngredients)
     act(kitchen, "ADD_INGREDIENT", { ingredientId });
   act(kitchen, "COOK");
   advance(COOK_MS);
@@ -139,10 +151,10 @@ test("start waits for two connected players; malicious payloads cannot choose re
   assert.equal(room.game.coins, 5);
 });
 
-test("each visit brings one of the five monsters, never the same one twice in a row", () => {
+test("each visit brings one of the monsters, never the same one twice in a row", () => {
   const { room, dining, act } = setup();
   const ids = MONSTERS.map((m) => m.id);
-  assert.equal(ids.length, 5);
+  assert.equal(ids.length, 8);
   act(dining, "START");
   const seen = [room.game.order.monsterId];
   for (let visit = 0; visit < 60; visit++) {

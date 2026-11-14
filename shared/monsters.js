@@ -6,6 +6,9 @@ export const MONSTERS = Object.freeze([
   { id: "fizz", name: "Fizz" },
   { id: "gloop", name: "Gloop" },
   { id: "puff", name: "Puff" },
+  { id: "zuzu", name: "Zuzu" },
+  { id: "tok", name: "Tok" },
+  { id: "wiggles", name: "Wiggles" },
 ]);
 export const monsterName = (id) =>
   MONSTERS.find((m) => m.id === id)?.name || "Bubbles";

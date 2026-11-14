@@ -22,7 +22,7 @@ const jobs = [
   ...MONSTERS.map(({ id }) => [
     `artwork/svg/${id}-sheet.svg`,
     `client/public/assets/monsters/${id}/sheet.png`,
-    2800,
+    5600,
     400,
     true,
   ]),
@@ -31,6 +31,13 @@ const jobs = [
     "client/public/assets/props/menu.png",
     400,
     150,
+    true,
+  ],
+  [
+    "artwork/svg/rocket-sheet.svg",
+    "client/public/assets/props/rocket.png",
+    480,
+    80,
     true,
   ],
   [

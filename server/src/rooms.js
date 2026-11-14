@@ -40,7 +40,7 @@ export class Rooms {
     let code;
     do {
       code = Array.from(
-        { length: 5 },
+        { length: 4 },
         () => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[randomInt(32)],
       ).join("");
     } while (this.rooms.has(code));
@@ -54,8 +54,8 @@ export class Rooms {
     }
   }
   join(input, socketId) {
-    if (typeof input.code !== "string" || !/^[A-Z2-9]{5}$/.test(input.code))
-      fail("Please check the five-letter room code.");
+    if (typeof input.code !== "string" || !/^[A-Z2-9]{4}$/.test(input.code))
+      fail("Please check the four-letter room code.");
     return this.add(this.get(input.code), input, socketId);
   }
   add(room, { name, role }, socketId) {

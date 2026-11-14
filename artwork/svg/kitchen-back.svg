@@ -16,25 +16,27 @@
 
   <rect width="540" height="800" fill="url(#tiles)"/>
 
-  <!-- stove: the counter covers it from y=430 down -->
+  <!-- stove: the counter covers it from y=430 down. The oven door is big, with a wide
+       window (x 62–194, y 348–418), so there is lots of room to drop the pizza in;
+       KitchenScene's OVEN point is the window's centre. -->
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round">
-    <rect x="40" y="300" width="460" height="230" rx="18" fill="#f4b63f"/>
-    <rect x="40" y="300" width="460" height="34" rx="14" fill="#ffd36b"/>
-    <rect x="64" y="368" width="132" height="110" rx="14" fill="#e59a26"/>
-    <rect x="80" y="386" width="100" height="56" rx="10" fill="#4b3d5e" stroke-width="3"/>
+    <rect x="34" y="276" width="472" height="254" rx="18" fill="#f4b63f"/>
+    <rect x="34" y="276" width="472" height="34" rx="14" fill="#ffd36b"/>
+    <rect x="48" y="320" width="160" height="200" rx="16" fill="#e59a26"/>
+    <rect x="62" y="348" width="132" height="70" rx="12" fill="#4b3d5e" stroke-width="3"/>
     <g fill="#f7f4fb" stroke-width="3">
-      <circle cx="96" cy="350" r="7"/><circle cx="130" cy="350" r="7"/><circle cx="164" cy="350" r="7"/>
+      <circle cx="96" cy="334" r="6"/><circle cx="128" cy="334" r="6"/><circle cx="160" cy="334" r="6"/>
     </g>
   </g>
-  <rect x="62" y="306" width="150" height="20" rx="6" fill="#4b3d5e"/>
-  <rect x="328" y="306" width="150" height="20" rx="6" fill="#4b3d5e"/>
-  <path d="M72 316 H202 M338 316 H468" stroke="#7d6d94" stroke-width="3" stroke-dasharray="10 6"/>
-  <path d="M90 402 Q100 394 112 398" stroke="#8a78a8" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <rect x="58" y="282" width="150" height="20" rx="6" fill="#4b3d5e"/>
+  <rect x="332" y="282" width="150" height="20" rx="6" fill="#4b3d5e"/>
+  <path d="M68 292 H198 M342 292 H472" stroke="#7d6d94" stroke-width="3" stroke-dasharray="10 6"/>
+  <path d="M76 366 Q90 356 106 360" stroke="#8a78a8" stroke-width="3" fill="none" stroke-linecap="round"/>
 
   <!-- a little steam from the burners -->
   <g fill="none" stroke="#ffffff" stroke-opacity="0.7" stroke-width="5" stroke-linecap="round">
-    <path d="M110 290 C100 276 120 266 110 250"/>
-    <path d="M430 290 C420 276 440 266 430 250"/>
+    <path d="M110 266 C100 252 120 242 110 226"/>
+    <path d="M430 266 C420 252 440 242 430 226"/>
   </g>
 
   <rect width="540" height="800" fill="url(#spot)"/>

@@ -4,7 +4,7 @@ import { pizza } from "../entities/art.js";
 import { chef } from "../entities/chef.js";
 import { pulse } from "../animations/effects.js";
 import { dragToTarget } from "../components/dragToTarget.js";
-import { INGREDIENTS, PIZZA, COOK_MS } from "../../../shared/recipes.js";
+import { INGREDIENTS, COOK_MS } from "../../../shared/recipes.js";
 import { monsterName } from "../../../shared/monsters.js";
 
 // Layout over the kitchen art: header and status sign at the top, Pip at the stove
@@ -24,9 +24,11 @@ const TRAY = {
 TRAY.perPage = TRAY.cols * TRAY.rows;
 TRAY.y = TRAY.top + TRAY.height / 2;
 const TRAY_IDS = Object.keys(INGREDIENTS);
-// The wall timer shows baking progress; the oven's window is on the stove's left door.
+// The wall timer shows baking progress; the oven's window is on the stove's left door
+// (kitchen-back.svg). OVEN is the window's centre and size; the drop area is larger.
 const TIMER = { x: 62, y: 236, r: 30 };
-const OVEN = { x: 130, y: 405 };
+const OVEN = { x: 128, y: 383, w: 128, h: 66 };
+const OVEN_DROP = { w: 240, h: 180 };
 const LOBBY_BUTTON_Y = 735;
 
 export class KitchenScene extends RestaurantScene {
@@ -55,7 +57,6 @@ export class KitchenScene extends RestaurantScene {
     super.create();
   }
   drawBackdrop(snapshot) {
-    if (!this.textures.exists("kitchen-back")) return super.drawBackdrop();
     const order = snapshot.game?.order;
     this.add.image(270, 400, "kitchen-back");
     this.ovenTimer(order);
@@ -66,8 +67,7 @@ export class KitchenScene extends RestaurantScene {
         this.effect({ type: "BOUNCE" });
       },
     });
-    if (this.textures.exists("kitchen-front"))
-      this.add.image(270, 400, "kitchen-front");
+    this.add.image(270, 400, "kitchen-front");
     this.headerPanel();
   }
   // The wall timer shows the bake: the needle sweeps and the face fills while the
@@ -161,7 +161,7 @@ export class KitchenScene extends RestaurantScene {
     }
     const added = order?.addedIngredients || [];
     const next = order?.requiredIngredients[added.length];
-    PIZZA.requiredIngredients.forEach((id, i) => {
+    (order?.requiredIngredients || []).forEach((id, i) => {
       const done = added.includes(id);
       const row = this.add
         .text(-12, 34 + i * 30, INGREDIENTS[id].icon, { fontSize: "24px" })
@@ -316,15 +316,12 @@ export class KitchenScene extends RestaurantScene {
       COMPLETE: "🎉 Great teamwork! +3 ⭐ +5 🪙",
     };
     this.plaque(270, 152, hints[status], 21);
-    // The pizza is in the oven while cooking, and gone once it has been sent.
-    const empty = ["COOKING", "DELIVERED", "COMPLETE"].includes(status);
-    this.prepDish = pizza(
-      this,
-      PREP.x,
-      PREP.y,
-      empty ? [] : order.addedIngredients,
-      PREP.scale,
-    );
+    // The pizza goes into the oven on its plate, and both are gone once it has been
+    // sent; a fresh plate is set out for the next customer.
+    const away = ["COOKING", "DELIVERED", "COMPLETE"].includes(status);
+    this.prepDish = away
+      ? null
+      : pizza(this, PREP.x, PREP.y, order.addedIngredients, PREP.scale);
     if (status === "PREPARING" && !next && online) this.readyForOven();
     if (status === "COOKING") this.ovenGlow();
     if (status === "READY_TO_DELIVER") this.servePizza(order, online);
@@ -342,7 +339,7 @@ export class KitchenScene extends RestaurantScene {
   readyForOven() {
     const dish = this.prepDish;
     const preheat = this.add
-      .rectangle(OVEN.x, OVEN.y, 92, 34, 0xff9a3c, 0.35)
+      .rectangle(OVEN.x, OVEN.y, OVEN.w, OVEN.h, 0xff9a3c, 0.35)
       .setStrokeStyle(3, INK);
     this.tweens.add({
       targets: preheat,
@@ -352,8 +349,8 @@ export class KitchenScene extends RestaurantScene {
       repeat: -1,
     });
     const target = this.add
-      .zone(OVEN.x, OVEN.y, 180, 130)
-      .setRectangleDropZone(180, 130);
+      .zone(OVEN.x, OVEN.y, OVEN_DROP.w, OVEN_DROP.h)
+      .setRectangleDropZone(OVEN_DROP.w, OVEN_DROP.h);
     pulse(this, dish);
     this.guideTarget = dish;
     dish.setSize(212, 212);
@@ -368,7 +365,7 @@ export class KitchenScene extends RestaurantScene {
   // A warm, flickering glow in the oven door's window while the pizza bakes.
   ovenGlow() {
     const glow = this.add
-      .rectangle(OVEN.x, OVEN.y, 92, 34, 0xff9a3c, 0.85)
+      .rectangle(OVEN.x, OVEN.y, OVEN.w, OVEN.h, 0xff9a3c, 0.85)
       .setStrokeStyle(3, INK);
     this.tweens.add({
       targets: glow,
@@ -378,7 +375,7 @@ export class KitchenScene extends RestaurantScene {
       repeat: -1,
     });
     this.add
-      .text(OVEN.x, OVEN.y, "🔥 🍕 🔥", { fontSize: "18px" })
+      .text(OVEN.x, OVEN.y, "🔥 🍕 🔥", { fontSize: "26px" })
       .setOrigin(0.5);
   }
   // The baked pizza slides out of the oven onto the counter; tap it to send it.
@@ -397,7 +394,16 @@ export class KitchenScene extends RestaurantScene {
       });
     }
     if (!online) return;
-    pulse(this, dish);
+    // A gentle breathing grow (no blinking) shows the pizza is ready to tap.
+    this.tweens.add({
+      targets: dish,
+      scale: PREP.scale * 1.06,
+      duration: 700,
+      ease: "Sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: this.lastStatus === "COOKING" ? 550 : 0,
+    });
     this.guideTarget = dish;
     dish
       .setSize(230, 180)

@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2800 400" width="2800" height="400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5600 400" width="5600" height="400">
   <!-- Mo: a tall green one-eyed monster with a leaf sprout.
-       7 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad, 6 sad blink. -->
+       14 frames of 400x400: 0 idle, 1 blink, 2 wave, 3 chomp, 4 happy, 5 sad, 6 sad blink, 7 look left, 8 look right,
+       9 hold pizza (mouth open), 10 hold pizza (chewing), 11 hands only (drawn over the pizza),
+       12 drink, 13 drinking hand only (drawn over the glass). -->
   <defs>
     <g id="back">
       <ellipse cx="160" cy="354" rx="36" ry="17" fill="#5fb34d"/>
@@ -61,6 +63,23 @@
     </g>
     <g id="brows-sad"><path d="M150 114 L200 98 L250 114" fill="none" stroke-width="6"/></g>
     <g id="mouth-frown"><path d="M176 290 Q200 266 224 290" fill="none" stroke-width="6"/></g>
+    <g id="eyes-look-left">
+      <ellipse cx="200" cy="176" rx="52" ry="56" fill="#ffffff"/>
+      <circle cx="196" cy="190" r="24" fill="#2b1d3a" stroke="none"/>
+      <circle cx="204" cy="180" r="8" fill="#ffffff" stroke="none"/>
+    </g>
+    <g id="eyes-look-right">
+      <ellipse cx="200" cy="176" rx="52" ry="56" fill="#ffffff"/>
+      <circle cx="216" cy="190" r="24" fill="#2b1d3a" stroke="none"/>
+      <circle cx="224" cy="180" r="8" fill="#ffffff" stroke="none"/>
+    </g>
+    <!-- holding: arms reach in to hold the pizza (or glass) at the mouth. The game
+         draws the pizza/glass over the body, then a hands-only frame over that. -->
+    <g id="arm-left-hold"><path d="M112 250 C115 290 129 337 146 309" fill="none" stroke-width="24"/><path d="M112 250 C115 290 129 337 146 309" fill="none" stroke="#7ed36a" stroke-width="16"/><circle cx="146" cy="309" r="15" fill="#7ed36a"/></g>
+    <g id="arm-right-hold"><path d="M288 250 C285 290 271 337 254 309" fill="none" stroke-width="24"/><path d="M288 250 C285 290 271 337 254 309" fill="none" stroke="#7ed36a" stroke-width="16"/><circle cx="254" cy="309" r="15" fill="#7ed36a"/></g>
+    <g id="hands-hold"><circle cx="146" cy="309" r="15" fill="#7ed36a"/><circle cx="254" cy="309" r="15" fill="#7ed36a"/></g>
+    <g id="arm-right-drink"><path d="M288 250 C284 290 267 352 246 324" fill="none" stroke-width="24"/><path d="M288 250 C284 290 267 352 246 324" fill="none" stroke="#7ed36a" stroke-width="16"/><circle cx="246" cy="324" r="15" fill="#7ed36a"/></g>
+    <g id="hand-drink"><circle cx="246" cy="324" r="15" fill="#7ed36a"/></g>
   </defs>
   <g stroke="#2b1d3a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
     <g><use href="#back"/><use href="#eyes-open"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
@@ -70,5 +89,12 @@
     <g transform="translate(1600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-grin"/><use href="#arm-left-up"/><use href="#arm-right-up"/></g>
     <g transform="translate(2000 0)"><use href="#back"/><use href="#eyes-sad"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
     <g transform="translate(2400 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#brows-sad"/><use href="#mouth-frown"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(2800 0)"><use href="#back"/><use href="#eyes-look-left"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(3200 0)"><use href="#back"/><use href="#eyes-look-right"/><use href="#mouth-smile"/><use href="#arm-left-down"/><use href="#arm-right-down"/></g>
+    <g transform="translate(3600 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-chomp"/><use href="#arm-left-hold"/><use href="#arm-right-hold"/></g>
+    <g transform="translate(4000 0)"><use href="#back"/><use href="#eyes-happy"/><use href="#mouth-smile"/><use href="#arm-left-hold"/><use href="#arm-right-hold"/></g>
+    <g transform="translate(4400 0)"><use href="#hands-hold"/></g>
+    <g transform="translate(4800 0)"><use href="#back"/><use href="#eyes-closed"/><use href="#mouth-chomp"/><use href="#arm-left-down"/><use href="#arm-right-drink"/></g>
+    <g transform="translate(5200 0)"><use href="#hand-drink"/></g>
   </g>
 </svg>

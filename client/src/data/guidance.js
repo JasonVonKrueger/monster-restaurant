@@ -3,6 +3,9 @@ import { monsterName } from "../../../shared/monsters.js";
 export function guidanceFor(snapshot, role) {
   const order = snapshot?.game?.order;
   const name = monsterName(order?.monsterId);
+  const wanted = order?.topping
+    ? `a ${INGREDIENTS[order.topping].label.toLowerCase()} pizza`
+    : "a pizza";
   if (!order)
     return role === "dining"
       ? "Invite your friend, then open the restaurant!"
@@ -18,7 +21,7 @@ export function guidanceFor(snapshot, role) {
       CUSTOMER_ARRIVED: `Your friend is welcoming ${name}. Tap Pip the chef for a giggle!`,
       CUSTOMER_SEATED: `Your friend is giving ${name} the menu.`,
       READING_MENU: `${name} is reading the menu. What will it be?`,
-      READY_TO_ORDER: `${name} wants a pizza! Here comes your order.`,
+      READY_TO_ORDER: `${name} wants ${wanted}! Here comes your order.`,
       COOKING: "Your pizza is cooking. A little oven magic!",
       READY_TO_DELIVER:
         "Your pizza is ready! Tap it to send it to your friend!",
@@ -30,7 +33,7 @@ export function guidanceFor(snapshot, role) {
     CUSTOMER_ARRIVED: `Look! ${name} is here! Tap to say hello!`,
     CUSTOMER_SEATED: `Drag the menu to ${name}!`,
     READING_MENU: `${name} is reading the menu. Hmm, what looks yummy?`,
-    READY_TO_ORDER: "Let’s make a pizza! Tap the bell to send the order.",
+    READY_TO_ORDER: `${name} wants ${wanted}! Tap the bell to send the order.`,
     ORDER_SENT: "Your chef has the order. Pop some bubbles while you wait!",
     PREPARING: "Your chef is making a silly pizza!",
     COOKING: "Your pizza is cooking. Send your chef a hug!",

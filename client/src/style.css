@@ -42,9 +42,6 @@ h1 {
   margin: 8px 0 18px;
   color: #7a51ae;
 }
-h1 span {
-  color: #ed8366;
-}
 form {
   padding: 20px;
   background: #fffaf0;
@@ -137,11 +134,6 @@ button:disabled {
   background: white;
   color: #5e4080;
 }
-.footnote {
-  font-size: 12px;
-  color: #99877b;
-  margin: 24px 0 8px;
-}
 #message {
   text-align: center;
   font-weight: 700;
@@ -223,9 +215,6 @@ body:has(#play:not([hidden])) #app {
   font-size: 12px;
   margin: 8px 0;
 }
-#play .footnote {
-  display: none;
-}
 #play #game {
   flex: 1;
   min-height: 0;
@@ -250,10 +239,6 @@ body:has(#play:not([hidden])) #app {
   .mascot {
     margin-top: 8px;
   }
-  .mascot img {
-    width: 84px;
-    height: 84px;
-  }
   h1 {
     margin: 4px 0 12px;
   }
@@ -265,9 +250,6 @@ body:has(#play:not([hidden])) #app {
   }
   .settings-link {
     margin-top: 8px;
-  }
-  .footnote {
-    display: none;
   }
 }
 
@@ -299,12 +281,47 @@ body:has(#play:not([hidden])) #app {
 #message:empty {
   display: none;
 }
+/* A little crowd of monsters: Bubbles in the middle, friends on each side. Each image
+   shows one frame of that monster's sprite sheet; landingMonsters.js picks the frame. */
+.mascot {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
 .mascot img {
-  /* Frame 0 of Bubbles' sprite sheet. */
-  width: 118px;
-  height: 118px;
+  width: 76px;
+  height: 76px;
+  margin: 0 -8px;
   object-fit: cover;
   object-position: 0 0;
+}
+.mascot img.star {
+  width: 118px;
+  height: 118px;
+  margin: 0 -4px;
+  position: relative;
+  z-index: 1;
+}
+/* Smaller monsters on narrow or short screens, after the base sizes so they win. */
+@media (max-width: 380px) {
+  .mascot img {
+    width: 62px;
+    height: 62px;
+  }
+  .mascot img.star {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (max-height: 720px) {
+  .mascot img {
+    width: 58px;
+    height: 58px;
+  }
+  .mascot img.star {
+    width: 84px;
+    height: 84px;
+  }
 }
 .parent-actions {
   display: flex;

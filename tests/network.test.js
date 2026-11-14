@@ -200,9 +200,9 @@ test(
         (s) => s.game?.order.status === "READY_TO_ORDER",
       );
       await act(dining, "GIVE_MENU");
-      await readyToOrder;
+      const { order } = (await readyToOrder).game;
       await act(dining, "SEND_ORDER");
-      for (const ingredientId of ["dough", "sauce", "cheese", "strawberry"])
+      for (const ingredientId of order.requiredIngredients)
         await act(kitchen, "ADD_INGREDIENT", { ingredientId });
       const ready = untilState(
         dining,

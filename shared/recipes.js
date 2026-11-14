@@ -6,11 +6,21 @@ export const INGREDIENTS = Object.freeze({
   lemon: { icon: "🍋", label: "Lemon", color: 0xfff176 },
   cookie: { icon: "🍪", label: "Cookie", color: 0xc68a4e },
   fish: { icon: "🐟", label: "Fish", color: 0x7fb8e6 },
+  banana: { icon: "🍌", label: "Banana", color: 0xffe066 },
+  grapes: { icon: "🍇", label: "Grapes", color: 0x9b6bd6 },
 });
-export const PIZZA = Object.freeze({
-  id: "strawberry-pizza",
-  requiredIngredients: ["dough", "sauce", "cheese", "strawberry"],
-});
+// Every pizza starts with crust, sauce and cheese, in that order; then each monster
+// asks for one topping, picked fresh for every order.
+const BASE_INGREDIENTS = Object.freeze(["dough", "sauce", "cheese"]);
+export const TOPPINGS = Object.freeze([
+  "strawberry",
+  "lemon",
+  "cookie",
+  "fish",
+  "banana",
+  "grapes",
+]);
+export const pizzaIngredients = (topping) => [...BASE_INGREDIENTS, topping];
 export const COOK_MS = 2200;
 // How long a monster reads the menu before it is ready to order.
 export const MENU_READ_MS = 3000;

@@ -1,16 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 800" width="540" height="800">
-  <!-- Kitchen front layer: the work counter, drawn over Pip. Transparent above y=424. -->
+  <!-- Kitchen front layer: the work counter, drawn over Pip. Transparent above y=424.
+       A butcher-block top seen from above: plank seams run toward a vanishing point
+       behind the wall, it is shaded where it meets the backsplash and brightens toward
+       the front lip. Seams are generated with vanishing point (270, 40). -->
   <defs>
-    <pattern id="granite" width="46" height="46" patternUnits="userSpaceOnUse">
-      <rect width="46" height="46" fill="#3b2a52"/>
-      <circle cx="5" cy="7" r="1.6" fill="#6d5a8a"/><circle cx="21" cy="3" r="1" fill="#c9bde0"/>
-      <circle cx="33" cy="14" r="1.8" fill="#271b38"/><circle cx="12" cy="22" r="1.1" fill="#8a78a8"/>
-      <circle cx="40" cy="30" r="1.4" fill="#6d5a8a"/><circle cx="27" cy="35" r="1" fill="#e3dbf0"/>
-      <circle cx="7" cy="38" r="1.7" fill="#271b38"/><circle cx="18" cy="43" r="1" fill="#8a78a8"/>
-      <circle cx="44" cy="6" r="0.9" fill="#e3dbf0"/><circle cx="30" cy="24" r="1.2" fill="#55436f"/>
-    </pattern>
+    <linearGradient id="top" x1="0" y1="442" x2="0" y2="786" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b8703f"/>
+      <stop offset="0.35" stop-color="#cf8a52"/>
+      <stop offset="1" stop-color="#e3a466"/>
+    </linearGradient>
+    <linearGradient id="backShade" x1="0" y1="442" x2="0" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2b1d3a" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#2b1d3a" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="sheen" cx="270" cy="640" r="260" gradientTransform="matrix(1 0 0 0.45 0 352)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff3dc" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fff3dc" stop-opacity="0"/>
+    </radialGradient>
   </defs>
-  <rect x="-10" y="432" width="560" height="380" fill="url(#granite)" stroke="#2b1d3a" stroke-width="4"/>
+  <rect x="-10" y="436" width="560" height="360" fill="url(#top)"/>
+  <g stroke="#9a5a2e" stroke-width="3" stroke-opacity="0.75" fill="none">
+    <path d="M-53.3 442 L-330 786"/>
+    <path d="M-4.8 442 L-240 786"/>
+    <path d="M43.7 442 L-150 786"/>
+    <path d="M92.2 442 L-60 786"/>
+    <path d="M140.7 442 L30 786"/>
+    <path d="M189.2 442 L120 786"/>
+    <path d="M237.7 442 L210 786"/>
+    <path d="M286.2 442 L300 786"/>
+    <path d="M334.7 442 L390 786"/>
+    <path d="M383.2 442 L480 786"/>
+    <path d="M431.7 442 L570 786"/>
+    <path d="M480.2 442 L660 786"/>
+    <path d="M528.7 442 L750 786"/>
+    <path d="M577.2 442 L840 786"/>
+  </g>
+  <g stroke="#a8673a" stroke-width="2" stroke-opacity="0.45" fill="none" stroke-linecap="round">
+    <path d="M-68.4 489.0 q0.5 7.4 0 14.7"/>
+    <path d="M-161.3 611.1 q1.6 12.9 0 25.9"/>
+    <path d="M-268.1 723.3 q2.6 18.1 0 36.1"/>
+    <path d="M1.3 477.2 q0.4 6.8 0 13.7"/>
+    <path d="M-98.5 605.3 q1.5 12.7 0 25.3"/>
+    <path d="M-181.0 742.7 q2.8 18.9 0 37.9"/>
+    <path d="M23.4 520.5 q0.8 8.8 0 17.6"/>
+    <path d="M-42.3 625.3 q1.7 13.6 0 27.2"/>
+    <path d="M-68.9 723.7 q2.6 18.1 0 36.1"/>
+    <path d="M95.8 504.0 q0.6 8.1 0 16.1"/>
+    <path d="M26.5 627.0 q1.7 13.7 0 27.3"/>
+    <path d="M2.7 730.2 q2.7 18.4 0 36.7"/>
+    <path d="M138.2 492.3 q0.5 7.5 0 15.0"/>
+    <path d="M109.3 637.2 q1.8 14.1 0 28.3"/>
+    <path d="M99.7 728.2 q2.7 18.3 0 36.6"/>
+    <path d="M213.0 514.1 q0.7 8.5 0 17.0"/>
+    <path d="M197.0 612.4 q1.6 13.0 0 26.0"/>
+    <path d="M188.8 713.7 q2.5 17.6 0 35.2"/>
+    <path d="M249.5 522.7 q0.8 8.9 0 17.8"/>
+    <path d="M249.8 598.8 q1.5 12.4 0 24.8"/>
+    <path d="M253.1 741.2 q2.8 18.9 0 37.7"/>
+    <path d="M312.9 509.5 q0.7 8.3 0 16.6"/>
+    <path d="M325.9 618.3 q1.7 13.3 0 26.5"/>
+    <path d="M342.1 708.8 q2.5 17.4 0 34.8"/>
+    <path d="M385.5 507.2 q0.6 8.2 0 16.4"/>
+    <path d="M416.8 627.5 q1.7 13.7 0 27.4"/>
+    <path d="M446.7 735.4 q2.7 18.6 0 37.2"/>
+    <path d="M425.5 511.8 q0.7 8.4 0 16.8"/>
+    <path d="M494.1 636.9 q1.8 14.1 0 28.2"/>
+    <path d="M517.6 738.0 q2.7 18.7 0 37.4"/>
+    <path d="M485.7 514.1 q0.7 8.5 0 17.0"/>
+    <path d="M554.3 635.4 q1.8 14.0 0 28.1"/>
+    <path d="M569.7 705.3 q2.4 17.2 0 34.5"/>
+    <path d="M568.8 521.4 q0.8 8.8 0 17.7"/>
+    <path d="M610.7 596.3 q1.5 12.3 0 24.5"/>
+    <path d="M659.1 711.9 q2.5 17.5 0 35.1"/>
+    <path d="M600.0 492.0 q0.5 7.5 0 15.0"/>
+    <path d="M685.5 637.6 q1.8 14.1 0 28.3"/>
+    <path d="M746.0 722.7 q2.6 18.0 0 36.0"/>
+  </g>
+  <rect x="-10" y="436" width="560" height="350" fill="url(#sheen)"/>
+  <rect x="-10" y="436" width="560" height="44" fill="url(#backShade)"/>
+  <!-- backsplash rail where the counter meets the wall -->
   <rect x="-10" y="424" width="560" height="18" rx="6" fill="#55436f" stroke="#2b1d3a" stroke-width="4"/>
-  <path d="M0 480 C140 466 400 466 540 480" stroke="#ffffff" stroke-opacity="0.08" stroke-width="34" fill="none"/>
+  <!-- the counter's rounded front lip -->
+  <rect x="-10" y="782" width="560" height="30" fill="#9a5a2e" stroke="#2b1d3a" stroke-width="4"/>
+  <path d="M-10 787 H550" stroke="#f2bd82" stroke-width="3"/>
 </svg>

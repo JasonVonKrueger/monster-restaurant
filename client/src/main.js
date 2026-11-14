@@ -3,6 +3,7 @@ import { AudioManager } from "./managers/AudioManager.js";
 import { connectAudioSettings } from "./managers/audioSettings.js";
 import { HUG_COOLDOWN_MS } from "../../shared/constants.js";
 import "./style.css";
+import { livenLandingMonsters } from "./landingMonsters.js";
 import { DiningScene } from "./scenes/DiningScene.js";
 import { KitchenScene } from "./scenes/KitchenScene.js";
 import { socket, request } from "./networking/connection.js";
@@ -205,3 +206,5 @@ socket.on("connect_error", () =>
   message("Finding the restaurant… We’ll keep trying."),
 );
 socket.connect();
+
+livenLandingMonsters();

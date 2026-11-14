@@ -7,7 +7,7 @@ const kitchen = { name: "Cooper", role: "kitchen" };
 test("room creation, membership, roles, capacity and token privacy", () => {
   const rooms = new Rooms();
   const { room, player } = rooms.create(dining, "a");
-  assert.match(room.code, /^[A-Z2-9]{5}$/);
+  assert.match(room.code, /^[A-Z2-9]{4}$/);
   assert.throws(
     () => rooms.join({ ...dining, code: room.code }, "b"),
     /already here/,
